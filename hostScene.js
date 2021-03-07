@@ -9,6 +9,12 @@ class HostScene extends Phaser.Scene {
             fill: "white"
         });
 
+        const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.backToMenu() });
+
+    }
+
+    backToMenu() {
+        this.scene.start("menu")
     }
 
 

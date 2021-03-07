@@ -2,7 +2,7 @@ class MenuScene extends Phaser.Scene {
     constructor() {
         // calling super makes this class inherit characteristics from its predecessor, the Scene class from Phaser
         // we are calling it playGame bc we will use this to play the game 
-        super("playGame");
+        super("menu");
     }
 
     create() {
@@ -43,12 +43,7 @@ class MenuScene extends Phaser.Scene {
         this.scene.start("joinGame")
     }
 
-    // settingsListener = function(object, pointer, isOver) {
-
-    // }
-
     update() {
-        // this.background.tilePositionX -= .5;
         
 
     }
