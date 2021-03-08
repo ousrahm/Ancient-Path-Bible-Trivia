@@ -1,0 +1,19 @@
+{
+  "name": "promised-land-game",
+  "version": "1.0.0",
+  "description": "This holds the files for the game that Robbie and I developed for Ancient Path Adventures, called PROMISED LAND JOURNEY™.",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ousrahm/Promised-Land-Game.git"
+  },
+  "author": "@OussamaRahmouni @RobbieErrico",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ousrahm/Promised-Land-Game/issues"
+  },
+  "homepage": "https://github.com/ousrahm/Promised-Land-Game#readme"
+}
