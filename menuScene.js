@@ -21,26 +21,22 @@ class MenuScene extends Phaser.Scene {
         });
 
         // Host text
-        const hostButton = this.add.text(350, 320, "HOST", {font: "bold 70px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openHost() });
+        const hostButton = this.add.text(350, 320, "HOST", {font: "bold 70px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("hostGame") });
         
         // Join text
-        const joinButton = this.add.text(650, 320, "JOIN", {font: "bold 70px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openJoin() });;
+        const joinButton = this.add.text(650, 320, "JOIN", {font: "bold 70px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("joinGame") });;
 
         // Settings Rock
         this.settingRock = this.add.image(80, config.height-28, "settingRock")
         this.settingRock.setScale(.15)
-        // Settings gear
-        // this.settingsGear = this.add.image(80, config.height-40, "settingsGear")
-        // this.settingsGear.setScale(.05)
 
+        // Temporary Start Trivia Button to take user to trivia question
+        const startTrivia = this.add.text(40, 40, "Trivia", {font: "bold 40px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("trivia") });
 
     }
 
-    openHost() {
-        this.scene.start("hostGame")
-    }
-    openJoin() {
-        this.scene.start("joinGame")
+    openScene(nameOfScene){
+        this.scene.start(nameOfScene);
     }
 
     update() {
