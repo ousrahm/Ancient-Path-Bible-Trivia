@@ -13,6 +13,8 @@ class LoadingScene extends Phaser.Scene {
         this.load.image("cloud", "images/cloudSquare.png")
         this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
         this.load.image("triviaBoard", 'images/wooden buttons/woodenBoard.png')
+        this.load.image("answerBoard", "images/wooden buttons/woodenAnswerBoard2.png")
+        this.load.image("answerBoardA", "images/wooden buttons/woodenAnswerBoard2A.png")
     }
 
     create() {

@@ -5,6 +5,7 @@ class TriviaScene extends Phaser.Scene {
 
     preload() {
         
+        
     }
 
     create() {
@@ -20,19 +21,39 @@ class TriviaScene extends Phaser.Scene {
         const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
 
         // Adds trivia board and trivia question
-        var triviaBoard = this.add.image(config.width/2, 200, "triviaBoard");
-        triviaBoard.scaleX = .78;
-        triviaBoard.scaleY = .46;
-        var text = this.add.text(triviaBoard.x/2, triviaBoard.y/1.7, question, { fontFamily: 'Georgia', fontSize: "47px", color: '#ffffff', align: "center"});
+        this.triviaBoard = this.add.image(config.width/2, 200, "triviaBoard");
+        this.triviaBoard.scaleX = .78;
+        this.triviaBoard.scaleY = .46;
+        var text = this.add.text(this.triviaBoard.x/2, this.triviaBoard.y/1.7, question, { fontFamily: 'Georgia', fontSize: "47px", color: '#ffffff', align: "center"});
 
         // Adds timer
-        this.timer = this.add.text(50, 50, 20, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
+        this.timer = this.add.text(50, 50, 25, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
         this.timersAt1 = false;
         this.updateCount = 0;
+
+
     }
 
     openScene(nameOfScene){
         this.scene.start(nameOfScene);
+    }
+
+    answerResponse(answer) {
+        console.log("You answered:" + answer);
+    }
+
+    addAnswers() {
+        this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "answerBoardA").setScale(.25);
+        this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A") });
+
+        this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "answerBoard").setScale(.25);
+        this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
+
+        this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "answerBoard").setScale(.25);
+        this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
+
+        this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "answerBoard").setScale(.25);
+        this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
     }
 
 
@@ -49,6 +70,11 @@ class TriviaScene extends Phaser.Scene {
             } else {
                 this.timer.text -= 1;
             }
+        }
+
+         // After 5 seconds to read the question, add the answers
+        if (this.timer.text == 25) {
+            this.addAnswers();
         }
 
     
