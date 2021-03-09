@@ -7,9 +7,9 @@
         <script type="text/javascript" src="menuScene.js"></script>
         <script type="text/javascript" src="hostScene.js"></script>
         <script type="text/javascript" src="joinScene.js"></script>
+        <script type="text/javascript" src="trivia.js"></script>
         <script type="text/javascript" src="game.js"></script>
     </head>
     <body>
-        
     </body>
 </html>

@@ -10,10 +10,13 @@ class LoadingScene extends Phaser.Scene {
         this.load.image("menuSign", "images/menuSign.png")
         this.load.image('settingRock', 'images/rock.png');
         this.load.image("settingsGear", "images/settingsGear.png")
+        this.load.image("cloud", "images/cloudSquare.png")
+        this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
+        this.load.image("triviaBoard", 'images/wooden buttons/woodenBoard.png')
     }
 
     create() {
-        this.add.text(20, 20, "Loading game...");
+        this.add.text(20, 20, "Loading Game...", {font: "bold 30px Arial", fill: "white"});
         this.scene.start("menu");
         // this.scale.pageAlignHorizontally = true;
         // this.scale.pageAlignVertically = true;
