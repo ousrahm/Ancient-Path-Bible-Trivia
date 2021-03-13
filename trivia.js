@@ -56,28 +56,27 @@ class TriviaScene extends Phaser.Scene {
         this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
     }
 
-
-    update() {
-        // Because update runs 60 times a second, once updateCount reaches a multiple of 60, 
-        // that is one second, and it subtracts that from the timer. Once the timer reaches 1, the next second, it changes the timer to "Time's up!".
-        this.updateCount+= 1;
+    countDownTimer() {
         if (this.timersAt1) {
             this.timer.text = "Time's up!"
-        }
-        if (this.updateCount % 60 == 0 && !this.timersAt1){
+        } else {
             if (this.timer.text == 1) {
                 this.timersAt1 = true;
             } else {
                 this.timer.text -= 1;
             }
-        }
 
-         // After 5 seconds to read the question, add the answers
-        if (this.timer.text == 25) {
-            this.addAnswers();
+            // After 5 seconds to read the question, add the answers
+            if (this.timer.text == 25) {
+                this.addAnswers();
+            }
         }
+    }
 
-    
+
+    update() {
+
+        var t=setInterval(this.countDownTimer,1000);
 
     }
 }
