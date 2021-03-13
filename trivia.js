@@ -29,7 +29,7 @@ class TriviaScene extends Phaser.Scene {
         // Adds timer
         // this.add.text(50, 50, setInterval(this.countDownTimer, 1000), { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
 
-        this.timerText = this.add.text(50, 50, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
+        this.timerText = this.add.text(50, 50, 25, { fontFamily: 'Arial', fontSize: "35px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 25 });
         this.answersAdded = false;
     }
