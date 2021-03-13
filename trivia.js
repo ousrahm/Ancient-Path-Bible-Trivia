@@ -27,15 +27,19 @@ class TriviaScene extends Phaser.Scene {
         var text = this.add.text(this.triviaBoard.x/2, this.triviaBoard.y/1.7, question, { fontFamily: 'Georgia', fontSize: "47px", color: '#ffffff', align: "center"});
 
         // Adds timer
-        this.timer = this.add.text(50, 50, 25, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
-        this.timersAt1 = false;
-        this.updateCount = 0;
+        // this.add.text(50, 50, setInterval(this.countDownTimer, 1000), { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
 
+        this.timerText = this.add.text(50, 50, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
+        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 25 });
 
     }
 
     openScene(nameOfScene){
         this.scene.start(nameOfScene);
+    }
+
+    logTime(){
+        console.log(this.timedEvent)
     }
 
     answerResponse(answer) {
@@ -56,28 +60,10 @@ class TriviaScene extends Phaser.Scene {
         this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
     }
 
-    countDownTimer() {
-        if (this.timersAt1) {
-            this.timer.text = "Time's up!"
-        } else {
-            if (this.timer.text == 1) {
-                this.timersAt1 = true;
-            } else {
-                this.timer.text -= 1;
-            }
-
-            // After 5 seconds to read the question, add the answers
-            if (this.timer.text == 25) {
-                this.addAnswers();
-            }
-        }
-    }
 
 
     update() {
-
-        var t=setInterval(this.countDownTimer,1000);
-
+        this.timerText.setText(this.timedEvent.repeatCount);
     }
 }
 
