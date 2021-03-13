@@ -31,7 +31,7 @@ class TriviaScene extends Phaser.Scene {
 
         this.timerText = this.add.text(50, 50, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 25 });
-
+        this.answersAdded = false;
     }
 
     openScene(nameOfScene){
@@ -39,7 +39,7 @@ class TriviaScene extends Phaser.Scene {
     }
 
     logTime(){
-        console.log(this.timedEvent)
+        console.log('timer is working!')
     }
 
     answerResponse(answer) {
@@ -63,7 +63,12 @@ class TriviaScene extends Phaser.Scene {
 
 
     update() {
+        if (this.timedEvent.repeatCount == 20 && !this.answersAdded) {
+            this.addAnswers()
+            this.answersAdded = true;            
+        }
         this.timerText.setText(this.timedEvent.repeatCount);
+
     }
 }
 
