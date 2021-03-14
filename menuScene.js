@@ -40,8 +40,7 @@ class MenuScene extends Phaser.Scene {
         // Temporary Start Trivia Button to take user to trivia question
         const startTrivia = this.add.text(40, 40, "Temporary Trivia Button", {font: "bold 40px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("trivia") });
 
-        this.gameState = new GameState(2);
-        console.log(this.gameState.players)
+        console.log(gameState.getCurrentPlayer())
     }
 
     openScene(nameOfScene){

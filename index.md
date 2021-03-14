@@ -3,6 +3,7 @@
     <head>
         <h1>Game</h1>
         <script type="text/javascript" src="phaser.min.js"></script>
+        <script type="text/javascript" src="gameState.js"></script>
         <script type="text/javascript" src="loadingScene.js"></script>
         <script type="text/javascript" src="menuScene.js"></script>
         <script type="text/javascript" src="hostScene.js"></script>

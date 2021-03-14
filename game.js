@@ -1,4 +1,3 @@
-
 var config = {
     width: 1200,
     height: 600,
@@ -9,4 +8,6 @@ window.onload = function() {
     // Created a new Game instance that we can configure
     var game = new Phaser.Game(config);
 }
+
+var gameState = new GameState(2);
 
