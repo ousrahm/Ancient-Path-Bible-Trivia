@@ -30,6 +30,7 @@ class TriviaScene extends Phaser.Scene {
         this.timerText = this.add.text(50, 50, 25, { fontFamily: 'Arial', fontSize: "35px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 25 });
         this.answersAdded = false;
+        this.timesUp = false;
     }
 
     openScene(nameOfScene){
@@ -46,7 +47,7 @@ class TriviaScene extends Phaser.Scene {
 
     addAnswers() {
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "answerBoardA").setScale(.25);
-        this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A") });
+        this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "answerBoard").setScale(.25);
         this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
@@ -61,11 +62,19 @@ class TriviaScene extends Phaser.Scene {
 
 
     update() {
+        if (!this.timesUp) {
+            this.timerText.setText(this.timedEvent.repeatCount);
+        }
+        /** If timer reaches 20, show the answers */
         if (this.timedEvent.repeatCount == 20 && !this.answersAdded) {
             this.addAnswers()
             this.answersAdded = true;            
         }
-        this.timerText.setText(this.timedEvent.repeatCount);
+        /** If the timer reaches 0, change the timer to "Time's up!" */
+        if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
+            this.timerText.setText("Time's up!")
+            this.timesUp = true;
+        }
 
     }
 }
