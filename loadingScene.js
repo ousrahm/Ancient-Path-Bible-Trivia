@@ -16,9 +16,6 @@ class LoadingScene extends Phaser.Scene {
     create() {
         this.add.text(20, 20, "Loading Game...", {font: "bold 30px Arial", fill: "white"});
         this.scene.start("menu");
-        // this.scale.pageAlignHorizontally = true;
-        // this.scale.pageAlignVertically = true;
-        // this.scale.refresh();
 
     }
 }

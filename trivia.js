@@ -4,7 +4,8 @@ class TriviaScene extends Phaser.Scene {
     }
 
     preload() {
-        
+        this.load.image("correct", "images/correct.png")
+        this.load.image("incorrect", "images/incorrect.png")
         
     }
 
@@ -27,7 +28,7 @@ class TriviaScene extends Phaser.Scene {
         var text = this.add.text(this.triviaBoard.x/2, this.triviaBoard.y/1.7, question, { fontFamily: 'Georgia', fontSize: "47px", color: '#ffffff', align: "center"});
 
         // Adds timer
-        this.timerText = this.add.text(50, 50, 25, { fontFamily: 'Arial', fontSize: "35px", color: '#ffffff', align: "center"});
+        this.timerText = this.add.text(50, 50, "", { fontFamily: 'Arial', fontSize: "35px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 25 });
         this.answersAdded = false;
         this.timesUp = false;
@@ -42,7 +43,11 @@ class TriviaScene extends Phaser.Scene {
     }
 
     answerResponse(answer) {
-        console.log("You answered:" + answer);
+        if (answer == "A") {
+            this.openScene("correct")
+        } else {
+            this.openScene("incorrect")
+        }
     }
 
     addAnswers() {
