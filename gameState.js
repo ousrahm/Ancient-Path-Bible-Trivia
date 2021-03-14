@@ -1,9 +1,10 @@
 class GameState {
     constructor(numberOfPlayers) {
         
-        if(numberOfPlayers < 2) {
-            throw "numberOfPlayers argument is < 2."
-        } else if (numberOfPlayers > 4) { 
+        // if(numberOfPlayers < 2) {
+        //     throw "numberOfPlayers argument is < 2."
+        // } else 
+        if (numberOfPlayers > 4) { 
             throw "numberOfPlayers argument is > 4."
         } else if (typeof numberOfPlayers != "number"){
             throw "numberOfPlayers argument is not a Number."
