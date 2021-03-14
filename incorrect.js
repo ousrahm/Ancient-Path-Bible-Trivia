@@ -1,3 +1,8 @@
+/**
+ * This class should be used to change the gameState and change the current question.
+ * It will then open another trivia question for whoever is next in the game. 
+ */
+
 class IncorrectScene extends Phaser.Scene {
     constructor() {
         super("incorrect");

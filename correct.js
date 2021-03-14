@@ -1,3 +1,8 @@
+/**
+ * This class should be used to change the gameState and change the current question.
+ * It will then open another trivia question for whoever is next in the game. 
+ */
+
 class CorrectScene extends Phaser.Scene {
     constructor() {
         super("correct");
@@ -17,6 +22,8 @@ class CorrectScene extends Phaser.Scene {
     openScene(nameOfScene){
         this.scene.start(nameOfScene);
     }
+
+    
 
     update() {
         if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
