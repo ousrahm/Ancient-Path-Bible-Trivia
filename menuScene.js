@@ -5,6 +5,13 @@ class MenuScene extends Phaser.Scene {
         super("menu");
     }
 
+    preload(){ 
+        this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
+        this.load.image("triviaBoard", 'images/wooden buttons/woodenBoard.png');
+        this.load.image("answerBoard", "images/wooden buttons/woodenAnswerBoard2.png");
+        this.load.image("answerBoardA", "images/wooden buttons/woodenAnswerBoard2A.png");
+    }
+
     create() {
         // Background
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "desertBackground")
@@ -33,7 +40,8 @@ class MenuScene extends Phaser.Scene {
         // Temporary Start Trivia Button to take user to trivia question
         const startTrivia = this.add.text(40, 40, "Temporary Trivia Button", {font: "bold 40px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("trivia") });
 
-        
+        this.gameState = new GameState(2);
+        console.log(this.gameState.players)
     }
 
     openScene(nameOfScene){
