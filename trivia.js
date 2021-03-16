@@ -17,24 +17,36 @@ class TriviaScene extends Phaser.Scene {
 
         // Temporary Question
         var question = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa?";
-        // Back Button
+
+        // Temporary back button
         const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
 
-        // Adds trivia board and trivia question
+        // Adds trivia board
         this.triviaBoard = this.add.image(config.width/2, 200, "triviaBoard");
         this.triviaBoard.scaleX = .78;
         this.triviaBoard.scaleY = .46;
-        // var centerCoordinates = Object.values(this.triviaBoard.getTopLeft());
 
+        // Adds trivia question
         var style = {fontFamily: 'Georgia', fontSize: "45px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
         var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question, style);
-        // text.runWordWrap(text, 100);
+    
         
         // Adds timer
-        this.timerText = this.add.text(50, 50, "", { fontFamily: 'Arial', fontSize: "35px", color: '#ffffff', align: "center"});
+        this.timerText = this.add.text(50, 60, "", { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 25 });
         this.answersAdded = false;
         this.timesUp = false;
+
+        // Gets number correct and number incorrect
+        var currentPlayer = gameState.getCurrentPlayer();
+        var correct = gameState.getNumberCorrect(currentPlayer);
+        var incorrect = gameState.getNumberAnswered(currentPlayer) - correct;
+
+        // Adds correct and incorrect counters
+        this.correctCounter = this.add.text(50, 120, "Correct: "+correct, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"})
+        this.incorrectCounter = this.add.text(50, 150, "Incorrect: "+incorrect, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"})
+
+        
     }
 
     openScene(nameOfScene){

@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ousrahm/Promised-Land-Game/issues"
   },
-  "homepage": "https://github.com/ousrahm/Promised-Land-Game#readme"
+  "homepage": "https://github.com/ousrahm/Promised-Land-Game#readme",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
 }

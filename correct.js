@@ -17,6 +17,10 @@ class CorrectScene extends Phaser.Scene {
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 5 });
         this.timesUp = false;
 
+        const currentPlayer = gameState.getCurrentPlayer();
+        gameState.addNumberCorrect(currentPlayer);
+        gameState.addNumberAnswered(currentPlayer);
+
     }
 
     openScene(nameOfScene){
