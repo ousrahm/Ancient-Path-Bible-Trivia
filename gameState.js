@@ -1,6 +1,6 @@
 class GameState {
     constructor(numberOfPlayers) {
-        
+        /** Commented this out for testing purposes for one player */
         // if(numberOfPlayers < 2) {
         //     throw "numberOfPlayers argument is < 2."
         // } else 
@@ -65,7 +65,7 @@ class GameState {
      * Methods to change current player, reset number correct for a player, 
      * to increase number correct for a player, to reset number answered for a player, 
      * to increase number answered for a player, & to advance stage number for a player.
-     * @param {*} playerNumber 
+     * @param {Number} playerNumber 
      */
     changeCurrentPlayer() {
         if (this.currentPlayer == this.numberOfPlayers-1 ) {
@@ -91,8 +91,14 @@ class GameState {
         this.numberAnswered[playerNumber] += 1;
     }
 
+    /**
+     * When this is called, reset number answered and number correct as well.
+     * @param {Number} playerNumber 
+     */
     advanceStage(playerNumber) {
         this.currentStages[playerNumber] += 1;
+        this.resetNumberCorrect(playerNumber);
+        this.resetNumberAnswered(playerNumber);
     }
 
 
