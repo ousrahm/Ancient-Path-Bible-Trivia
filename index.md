@@ -9,6 +9,9 @@
         <script type="text/javascript" src="hostScene.js"></script>
         <script type="text/javascript" src="joinScene.js"></script>
         <script type="text/javascript" src="trivia.js"></script>
+        <script type="text/javascript" src="correct.js"></script>
+        <script type="text/javascript" src="incorrect.js"></script>
+
         <script type="text/javascript" src="game.js"></script>
     </head>
     <body>
