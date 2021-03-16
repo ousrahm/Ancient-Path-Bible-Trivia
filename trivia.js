@@ -90,10 +90,10 @@ class TriviaScene extends Phaser.Scene {
             this.addAnswers()
             this.answersAdded = true;            
         }
-        /** If the timer reaches 0, change the timer to "Time's up!" */
+        /** If the timer reaches 0, go to incorrect scene. */
         if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
-            this.timerText.setText("Time's up!")
             this.timesUp = true;
+            this.openScene("incorrect");
         }
 
     }
