@@ -2,7 +2,7 @@
 <html>
     <head>
         <h1>Game</h1>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="node_modules/jquery-csv/src/jquery.csv.js"></script>
         <script type="text/javascript" src="phaser.min.js"></script>
         <script type="text/javascript" src="gameState.js"></script>
