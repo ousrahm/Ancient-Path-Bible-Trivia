@@ -2,7 +2,7 @@
 <html>
     <head>
         <h1>Game</h1>
-        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="node_modules/jquery-csv/src/jquery.csv.js"></script>
         <script type="text/javascript" src="phaser.min.js"></script>
         <script type="text/javascript" src="gameState.js"></script>
