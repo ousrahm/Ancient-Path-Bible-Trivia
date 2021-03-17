@@ -1,10 +1,12 @@
-class Question {
+class Questions {
     constructor(question, correct, incorrect1, incorrect2, incorrect3) {
         this.question = question;
         this.correct = correct;
         this.incorrect1 = incorrect1;
         this.incorrect2 = incorrect2;
         this.incorrect3 = incorrect3;
+
+        console.log($.csv.toObjects("csvs/sampleQuestions.csv"))
     }
 
     getQuestion() {

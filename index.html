@@ -8,10 +8,10 @@
         <script type="text/javascript" src="menuScene.js"></script>
         <script type="text/javascript" src="hostScene.js"></script>
         <script type="text/javascript" src="joinScene.js"></script>
-        <script type="text/javascript" src="trivia.js"></script>
-        <script type="text/javascript" src="correct.js"></script>
-        <script type="text/javascript" src="incorrect.js"></script>
-
+        <script type="text/javascript" src="triviaScene.js"></script>
+        <script type="text/javascript" src="correctScene.js"></script>
+        <script type="text/javascript" src="incorrectScene.js"></script>
+        <script type="text/javascript" src="newStageScene.js"></script>
         <script type="text/javascript" src="game.js"></script>
     </head>
     <body>

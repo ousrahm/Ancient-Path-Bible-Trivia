@@ -4,9 +4,6 @@ class TriviaScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("correct", "images/correct.png")
-        this.load.image("incorrect", "images/incorrect.png")
-        
     }
 
     create() {
@@ -90,10 +87,10 @@ class TriviaScene extends Phaser.Scene {
             this.addAnswers()
             this.answersAdded = true;            
         }
-        /** If the timer reaches 0, change the timer to "Time's up!" */
+        /** If the timer reaches 0, go to incorrect scene. */
         if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
-            this.timerText.setText("Time's up!")
             this.timesUp = true;
+            this.openScene("incorrect");
         }
 
     }

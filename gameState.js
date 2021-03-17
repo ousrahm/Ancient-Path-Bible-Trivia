@@ -33,7 +33,7 @@ class GameState {
         for (let i = 0; i < numberOfPlayers; i++) {
             this.numberCorrect.push(0);
             this.numberAnswered.push(0);
-            this.currentStages.push(0);
+            this.currentStages.push(1);
         }
     }
 
@@ -92,6 +92,7 @@ class GameState {
     }
 
     /**
+     * Advances player's stage by one.
      * When this is called, reset number answered and number correct as well.
      * @param {Number} playerNumber 
      */
