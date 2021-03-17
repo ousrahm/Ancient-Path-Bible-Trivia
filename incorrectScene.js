@@ -3,22 +3,21 @@
  * It will then open another trivia question for whoever is next in the game. 
  */
 
-class CorrectScene extends Phaser.Scene {
+class IncorrectScene extends Phaser.Scene {
     constructor() {
-        super("correct");
+        super("incorrect");
     }
 
     preload(){ 
     }
 
     create() {
-        this.correctImage = this.add.image(config.width/2, config.height/2, "correct");
+        this.incorrectImage = this.add.image(config.width/2, config.height/2, "incorrect");
 
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 5 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
         this.timesUp = false;
 
         const currentPlayer = gameState.getCurrentPlayer();
-        gameState.addNumberCorrect(currentPlayer);
         gameState.addNumberAnswered(currentPlayer);
 
     }
@@ -26,8 +25,6 @@ class CorrectScene extends Phaser.Scene {
     openScene(nameOfScene){
         this.scene.start(nameOfScene);
     }
-
-    
 
     update() {
         if (this.timedEvent.repeatCount == 0 && !this.timesUp) {

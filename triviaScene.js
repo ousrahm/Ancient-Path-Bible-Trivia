@@ -4,9 +4,6 @@ class TriviaScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("correct", "images/correct.png")
-        this.load.image("incorrect", "images/incorrect.png")
-        
     }
 
     create() {

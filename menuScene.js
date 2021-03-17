@@ -3,7 +3,7 @@ class MenuScene extends Phaser.Scene {
         // calling super makes this class inherit characteristics from its predecessor, the Scene class from Phaser
         // we are calling it playGame bc we will use this to play the game 
         super("menu");
-    }
+    } 
 
     preload(){ 
         this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
@@ -12,6 +12,8 @@ class MenuScene extends Phaser.Scene {
         this.load.image("woodenAnswerB", "images/wooden buttons/woodenAnswerB.png");
         this.load.image("woodenAnswerC", "images/wooden buttons/woodenAnswerC.png");
         this.load.image("woodenAnswerD", "images/wooden buttons/woodenAnswerD.png");
+        this.load.image("correct", "images/correct.png")
+        this.load.image("incorrect", "images/incorrect.png")
     }
 
     create() {

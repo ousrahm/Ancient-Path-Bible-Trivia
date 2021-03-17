@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ousrahm/Promised-Land-Game#readme",
   "dependencies": {
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "jquery-csv": "^1.0.11"
   }
 }

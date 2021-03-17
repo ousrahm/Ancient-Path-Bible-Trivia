@@ -2,7 +2,7 @@ var config = {
     width: 1200,
     height: 600,
     backgroundColor: 0x0000000,
-    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene]
+    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene]
 }
 window.onload = function() {
     // Created a new Game instance that we can configure
