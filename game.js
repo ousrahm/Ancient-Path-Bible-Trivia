@@ -11,3 +11,24 @@ window.onload = function() {
 
 var gameState = new GameState(1);
 
+
+var data;
+$.ajax({
+    type: "GET",  
+    url: "csvs/sampleQuestions.csv",
+    dataType: "text",       
+    success: function(response)  
+    {
+    data = $.csv.toArrays(response);
+    makeQuestions(data);
+    }   
+});
+
+var questions;
+function makeQuestions(data) {
+    questions = new Questions(data);
+}
+
+
+
+

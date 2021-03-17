@@ -1,32 +1,49 @@
 class Questions {
-    constructor(question, correct, incorrect1, incorrect2, incorrect3) {
-        this.question = question;
-        this.correct = correct;
-        this.incorrect1 = incorrect1;
-        this.incorrect2 = incorrect2;
-        this.incorrect3 = incorrect3;
+    constructor(data) {
+        this.originalData = data.slice(0);
+        this.questionsList = data.slice(0);
+        this.question;
+        this.answers = [];
+        this.correctLetter;
+        this.index;
 
-        console.log($.csv.toObjects("csvs/sampleQuestions.csv"))
     }
 
-    getQuestion() {
+    /**
+     * Returns random question from QuestionsList;
+     * If QuestionsList is empty, refresh with originalData.
+     */
+    getRandomQuestion() {
+        this.index = this.getRandomInt(this.questionsList.length);
+        this.question = this.questionsList[this.index][0];
         return this.question;
     }
 
-    getCorrect() {
-        return this.correct;
-    }
-    
-    getIncorrects() {
-        let incorrects = [this.incorrect1, this.incorrect2, this.incorrect3];
-        return incorrects;
+    getAnswers() {
+        this.answers=[];
+        this.answers.push(this.questionsList[this.index][1])
+        this.answers.push(this.questionsList[this.index][2])
+        this.answers.push(this.questionsList[this.index][3])
+        this.answers.push(this.questionsList[this.index][4])
+        if (this.questionsList.length <= 1) {
+            this.questionsList = this.originalData.slice(0);
+        } else {
+            this.questionsList.splice(this.index, 1);
+        }
+        return this.answers;
     }
 
-    changeQuestion(question, correct, incorrect1, incorrect2, incorrect3) {
-        this.question = question;
-        this.correct = correct;
-        this.incorrect1 = incorrect1;
-        this.incorrect2 = incorrect2;
-        this.incorrect3 = incorrect3;
+    getCorrect() {
+        return this.correctLetter;
     }
+
+    setCorrect(letter) {
+        this.correctLetter=letter;
+    }
+
+    getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+
+
 }
