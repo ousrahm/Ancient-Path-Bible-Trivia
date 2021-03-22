@@ -7,7 +7,6 @@ class TriviaScene extends Phaser.Scene {
     }
 
     create() {
-
         // How to run a looping background
         this.background = this.add.video(0, 0, 'desertLoop').setOrigin(0,0);
         this.background.play();

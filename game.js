@@ -2,6 +2,7 @@ var config = {
     width: 1200,
     height: 600,
     backgroundColor: 0x0000000,
+    scale: { parent: 'mygame', autoCenter: Phaser.Scale.CENTER_BOTH }, 
     scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene]
 }
 window.onload = function() {
