@@ -31,6 +31,12 @@ class TriviaScene extends Phaser.Scene {
         this.answersAdded = false;
         this.timesUp = false;
 
+        // Adds whose turn it is
+        var style1 = {fontFamily: 'Arial', fontSize: "28px", align: "center", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
+
+        const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        this.add.text(screenCenterX, 20, "Player " + (gameState.getCurrentPlayer()+1), style1).setOrigin(.5)
+
         // Gets number correct and number incorrect
         var currentPlayer = gameState.getCurrentPlayer();
         var correct = gameState.getNumberCorrect(currentPlayer);
