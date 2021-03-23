@@ -11,10 +11,15 @@ class LoadingScene extends Phaser.Scene {
         this.load.image('settingRock', 'images/rock.png');
         this.load.image("settingsGear", "images/settingsGear.png")
         this.load.image("cloud", "images/cloudSquare.png")
+
+        this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
+        this.load.video('autumnLoop', 'images/autumn.mp4', 'loadeddata', false, true);
+        this.load.video('rainbowLoop', 'images/rainbow.mp4', 'loadeddata', false, true);
+        this.load.video('summerLoop', 'images/summer.mp4', 'loadeddata', false, true);
     }
 
     create() {
-        this.add.text(20, 20, "Loading Game...", {font: "bold 30px Arial", fill: "white"});
+        this.add.text(200, 200, "Loading Game...", {font: "bold 30px Arial", fill: "white"});
         this.scene.start("menu");
 
     }

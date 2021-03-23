@@ -8,7 +8,8 @@ class TriviaScene extends Phaser.Scene {
 
     create() {
         // How to run a looping background
-        this.background = this.add.video(0, 0, 'desertLoop').setOrigin(0,0);
+        var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
+        this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
         this.background.play();
 
         // Temporary back button
@@ -26,7 +27,7 @@ class TriviaScene extends Phaser.Scene {
         
         // Adds timer
         this.timerText = this.add.text(50, 60, "", { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
-        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 25 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 20 });
         this.answersAdded = false;
         this.timesUp = false;
 
@@ -38,6 +39,11 @@ class TriviaScene extends Phaser.Scene {
         // Adds correct and incorrect counters
         this.correctCounter = this.add.text(50, 120, "Correct: "+correct, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"})
         this.incorrectCounter = this.add.text(50, 150, "Incorrect: "+incorrect, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"})
+
+        // Adds location of other players
+        for (let i = 0; i < gameState.getNumberOfPlayers(); i++) {
+            this.addPlayerInfo(i);
+        }
 
     }
 
@@ -55,6 +61,8 @@ class TriviaScene extends Phaser.Scene {
         } else {
             this.openScene("incorrect")
         }
+
+
     }
 
     getRandomInt(max) {
@@ -98,13 +106,20 @@ class TriviaScene extends Phaser.Scene {
         this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, scrambled[3], style);
     }
 
+    addPlayerInfo(player) {
+        var playerStage = gameState.getStages(player)+1
+        var playerCorrect = gameState.getNumberCorrect(player);
+        var style = { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "left"};
+        this.add.text(1000, 50 + (player*30), "P"+(player+1)+": " + "Stage " + playerStage + "." + playerCorrect, style);
+    }
+
 
 
     update() {
         if (!this.timesUp) {
             this.timerText.setText(this.timedEvent.repeatCount);
         }
-        /** If timer reaches 20, show the answers */
+        /** If timer reaches 17, show the answers */
         if (this.timedEvent.repeatCount == 20 && !this.answersAdded) {
             this.addAnswers()
             this.answersAdded = true;            

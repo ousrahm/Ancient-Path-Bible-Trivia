@@ -12,11 +12,12 @@ class CorrectScene extends Phaser.Scene {
     }
 
     create() {
+
         // Adds image of check
         this.correctImage = this.add.image(config.width/2, config.height/2, "correct");
 
         // Adds timer
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
         this.timesUp = false;
 
         const currentPlayer = gameState.getCurrentPlayer();
@@ -25,13 +26,12 @@ class CorrectScene extends Phaser.Scene {
 
         // Will change to true once player has completed this round
         this.threeCorrect = false;
-
         if (gameState.getNumberCorrect(currentPlayer)==3) {
+            if (currentPlayer == gameState.getNumberOfPlayers()-1) {
+                gameState.checkForWin(True);
+            }
             this.threeCorrect = true;
         }
-
-
-        
 
     }
 
