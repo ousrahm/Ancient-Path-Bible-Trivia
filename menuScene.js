@@ -6,7 +6,7 @@ class MenuScene extends Phaser.Scene {
     } 
 
     preload(){ 
-        this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
+        // this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
         this.load.image("triviaBoard", 'images/wooden buttons/woodenBoard.png');
         this.load.image("woodenAnswerA", "images/wooden buttons/woodenAnswerA.png");
         this.load.image("woodenAnswerB", "images/wooden buttons/woodenAnswerB.png");
