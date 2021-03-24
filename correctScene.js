@@ -28,7 +28,7 @@ class CorrectScene extends Phaser.Scene {
         this.threeCorrect = false;
         if (gameState.getNumberCorrect(currentPlayer)==3) {
             if (currentPlayer == gameState.getNumberOfPlayers()-1) {
-                gameState.checkForWin(True);
+                gameState.checkForWin(true);
             }
             this.threeCorrect = true;
         }
