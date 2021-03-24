@@ -155,7 +155,7 @@ class GameState {
         for (let i = 0; i < this.getNumberOfPlayers(); i++) {
             if (i == this.getNumberOfPlayers()-1) {
                 if (correct) {
-                    if (this.getStages(i) == this.finalStage-1 && this.getNumberCorrect == 3) {
+                    if (this.getStages(i) == this.finalStage-1) {
                         this.playersFinished.push(i);
                     }
                 }

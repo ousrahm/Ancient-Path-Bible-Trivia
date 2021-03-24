@@ -10,7 +10,7 @@ class newStageScene extends Phaser.Scene {
         var currentPlayer = gameState.getCurrentPlayer();
 
         // Adds timer
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
         this.timesUp = false;
 
         // Advance currentPlayer's stage (resets numberCorrect & numberAnswered counters)

@@ -14,7 +14,7 @@ class IncorrectScene extends Phaser.Scene {
     create() {
         if (gameState.getCurrentPlayer() == gameState.getNumberOfPlayers()-1) {
             gameState.checkForWin(false);
-        }
+        } 
 
         this.incorrectImage = this.add.image(config.width/2, config.height/2, "incorrect");
 
