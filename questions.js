@@ -52,7 +52,6 @@ class Questions {
             this.questionObject[this.stage] = this.permanentQuestionObject[this.stage];
         } else {
             this.questionObject[this.stage].splice(this.index, 1);
-            console.log("Shortened Array: " + this.questionObject[this.stage].length);
         }
         return this.answers;
     }
