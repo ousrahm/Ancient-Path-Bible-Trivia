@@ -7,6 +7,8 @@ class TriviaScene extends Phaser.Scene {
     }
 
     create() {
+        var currentPlayer = gameState.getCurrentPlayer();
+
         // How to run a looping background
         var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
@@ -22,12 +24,12 @@ class TriviaScene extends Phaser.Scene {
 
         // Adds trivia question
         var style = {fontFamily: 'Georgia', fontSize: "45px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
-        var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, questions.getRandomQuestion(), style);
+        var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, questions.getRandomQuestion(gameState.getStages(currentPlayer)), style);
     
         
         // Adds timer
         this.timerText = this.add.text(50, 60, "", { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
-        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.logTime(), callbackScope: this, repeat: 20 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20 });
         this.answersAdded = false;
         this.timesUp = false;
 
@@ -38,7 +40,6 @@ class TriviaScene extends Phaser.Scene {
         this.add.text(screenCenterX, 20, "Player " + (gameState.getCurrentPlayer()+1), style1).setOrigin(.5)
 
         // Gets number correct and number incorrect
-        var currentPlayer = gameState.getCurrentPlayer();
         var correct = gameState.getNumberCorrect(currentPlayer);
         var incorrect = gameState.getNumberAnswered(currentPlayer) - correct;
 
@@ -53,13 +54,20 @@ class TriviaScene extends Phaser.Scene {
 
     }
 
+    /**
+     * openScene(nameOfScene):
+     * Starts the scene of the specified name.
+     * @param {String} nameOfScene 
+     */
     openScene(nameOfScene){
         this.scene.start(nameOfScene);
     }
 
-    logTime(){
-        console.log('timer is working!')
-    }
+    /**
+     * answerResponse(answer):
+     * Open a scene based on the correct or incorrect answer.
+     * @param {String} answer 
+     */
 
     answerResponse(answer) {
         if (answer == questions.getCorrect()) {
@@ -71,9 +79,11 @@ class TriviaScene extends Phaser.Scene {
 
     }
 
-    getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
-    }
+    /**
+     * addAnswers():
+     * The answers to the current question are retrieved. After they are scrambled, the correct answer is sent to the
+     * questions class to be stored. The answer boards are added to the screen and connected to answerResponse().
+     */
 
     addAnswers() {
         var answers = questions.getAnswers();
@@ -112,6 +122,20 @@ class TriviaScene extends Phaser.Scene {
         this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, scrambled[3], style);
     }
 
+    /**
+     * getRandomInt(max):
+     * @param {Number} max 
+     * @returns a random number from 0 to (max - 1);
+     */
+    getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    /**
+     * addPlayerInfo(player):
+     * Adds text to the screen displaying the player's number, stage, and number correct in that stage.
+     * @param {Number} player 
+     */
     addPlayerInfo(player) {
         var playerStage = gameState.getStages(player)+1
         var playerCorrect = gameState.getNumberCorrect(player);
@@ -122,10 +146,11 @@ class TriviaScene extends Phaser.Scene {
 
 
     update() {
+        /** If the timer is still running, update on screen accordingly. */
         if (!this.timesUp) {
             this.timerText.setText(this.timedEvent.repeatCount);
         }
-        /** If timer reaches 17, show the answers */
+        /** If timer reaches 17, show the answers. */
         if (this.timedEvent.repeatCount == 20 && !this.answersAdded) {
             this.addAnswers()
             this.answersAdded = true;            

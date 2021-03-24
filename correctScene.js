@@ -14,7 +14,7 @@ class CorrectScene extends Phaser.Scene {
     create() {
 
         // Adds image of check
-        this.correctImage = this.add.image(config.width/2, config.height/2, "correct");
+        this.correctImage = this.add.image(config.width/2, config.height/2, "correct").setScale(.8);
 
         // Adds timer
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });

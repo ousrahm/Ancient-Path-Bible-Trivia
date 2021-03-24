@@ -16,7 +16,7 @@ class IncorrectScene extends Phaser.Scene {
             gameState.checkForWin(false);
         } 
 
-        this.incorrectImage = this.add.image(config.width/2, config.height/2, "incorrect");
+        this.incorrectImage = this.add.image(config.width/2, config.height/2, "incorrect").setScale(.8);
 
         // Adds timer
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
