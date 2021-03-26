@@ -1,29 +1,15 @@
 class GameState {
-    constructor(numberOfPlayers) {
-        /** Commented this out for testing purposes for one player */
-        if(numberOfPlayers < 2) {
-            throw "numberOfPlayers argument is < 2."
-        } else 
-        if (numberOfPlayers > 4) { 
-            throw "numberOfPlayers argument is > 4."
-        } else if (typeof numberOfPlayers != "number"){
-            throw "numberOfPlayers argument is not a Number."
-        } 
+    constructor() {
+
+        this.numberOfPlayers;
+        this.playerEnums;
+        this.players;
 
         /**Index of current player (initialized to 0 (PLAYER1)) */
         this.currentPlayer = 0;
 
-        /**Player's enumeration equals their respective index in the other property arrays. */
-        this.numberOfPlayers = numberOfPlayers;
-        this.playerEnums = {PLAYER1:0, PLAYER2:1, PLAYER3:2, PLAYER4:3};
-        this.players = [];
-        for (let i = 1; i <= numberOfPlayers; i++) {
-            this.players.push(this.playerEnums["PLAYER" + i]);
-        } 
-
         this.stageNames = ["desertLoop", "autumnLoop", "rainbowLoop", "summerLoop"];
         
-
         /**
          * numberCorrect    The number of questions answered correctly in each player's current stage. 
          * numberAnswered   The number of questions answered in each player's current stage. 
@@ -32,11 +18,6 @@ class GameState {
         this.numberCorrect = [];
         this.numberAnswered = [];
         this.currentStages = [];
-        for (let i = 0; i < numberOfPlayers; i++) {
-            this.numberCorrect.push(0);
-            this.numberAnswered.push(0);
-            this.currentStages.push(0);
-        }
 
         /**
          * Final Stage
@@ -55,6 +36,33 @@ class GameState {
          * 2+ - two or more players have finished
          */
         this.winState = 0;
+    }
+
+    setUpGameState(numberOfPlayers) {
+        /** Commented this out for testing purposes for one player */
+        // if(numberOfPlayers < 2) {
+        //     throw "numberOfPlayers argument is < 2."
+        // } else 
+        // if (numberOfPlayers > 4) { 
+        //     throw "numberOfPlayers argument is > 4."
+        // } else if (typeof numberOfPlayers != "number"){
+        //     throw "numberOfPlayers argument is not a Number."
+        // }  
+        /**Player's enumeration equals their respective index in the other property arrays. */
+        this.numberOfPlayers = numberOfPlayers;
+        this.playerEnums = {PLAYER1:0, PLAYER2:1, PLAYER3:2, PLAYER4:3};
+        this.players = [];
+        for (let i = 1; i <= numberOfPlayers; i++) {
+            this.players.push(this.playerEnums["PLAYER" + i]);
+        } 
+
+        /** Add correct number of slots to arrays. */
+        for (let i = 0; i < numberOfPlayers; i++) {
+            this.numberCorrect.push(0);
+            this.numberAnswered.push(0);
+            this.currentStages.push(0);
+        }
+
     }
 
     /**
