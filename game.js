@@ -3,14 +3,14 @@ var config = {
     height: 600,
     backgroundColor: 0x0000000,
     scale: { parent: 'mygame', autoCenter: Phaser.Scale.CENTER_BOTH }, 
-    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene]
+    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, tempInput]
 }
 window.onload = function() {
     // Created a new Game instance that we can configure
     var game = new Phaser.Game(config);
 }
 
-var gameState = new GameState(2);
+var gameState = new GameState();
 
 
 var data;
