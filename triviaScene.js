@@ -151,7 +151,7 @@ class TriviaScene extends Phaser.Scene {
             this.timerText.setText(this.timedEvent.repeatCount);
         }
         /** If timer reaches 17, show the answers. */
-        if (this.timedEvent.repeatCount == 17 && !this.answersAdded) {
+        if (this.timedEvent.repeatCount == 20 && !this.answersAdded) {
             this.addAnswers()
             this.answersAdded = true;            
         }
