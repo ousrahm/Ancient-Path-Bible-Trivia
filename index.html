@@ -17,6 +17,7 @@
         <script type="text/javascript" src="questions.js"></script>
         <script type="text/javascript" src="newStageScene.js"></script>
         <script type="text/javascript" src="nextPlayerScene.js"></script>
+        <script type="text/javascript" src="storyLineScene.js"></script>
         <script type="text/javascript" src="victoryScene.js"></script>
         <script type="text/javascript" src="game.js"></script>
         <div id='mygame'></div> 

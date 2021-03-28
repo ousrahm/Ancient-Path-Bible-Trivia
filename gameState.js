@@ -153,10 +153,28 @@ class GameState {
         this.resetNumberAnswered(playerNumber);
     }
 
+    /**
+     * Checks to see if the current stage has been reached yet.
+     * Output: false if nobody has reached the current stage and true if somebody has
+     */
+    reachedCurrentStage() {
+        for (let i = 0; i < this.numberOfPlayers; i++) {
+            if (i == this.currentPlayer) {
+                continue;
+            } else if (i != this.currentPlayer && this.getStages(i) >= this.getStages(this.currentPlayer)) {
+                    console.log("returning true")
+                    return true;
+            }
+        }
+        console.log("returnin false")
+        return false;
+    }
+
 
     
     /**
      * Checks to see if any player finished final stage
+     * @param {boolean} correct 
      */
     checkForWin(correct) {
 

@@ -15,11 +15,16 @@ class newStageScene extends Phaser.Scene {
 
         // Advance currentPlayer's stage (resets numberCorrect & numberAnswered counters)
         gameState.advanceStage(currentPlayer);
+
+        this.storyLine = gameState.reachedCurrentStage();
+
         var nextStage = gameState.getStages(currentPlayer);
         var texts = "Player " + (currentPlayer+1) + " has moved on to Stage " + (nextStage+1) + "!! Player " + (gameState.changeCurrentPlayer()+1) + " get ready!!";
         if (gameState.getStages(currentPlayer) == gameState.getFinalStage()) {
             texts = "Player " + (currentPlayer+1) + " has finished the final stage!!";
         }
+
+
         
         // Checks for win
         this.gameOver = false;
@@ -50,8 +55,11 @@ class newStageScene extends Phaser.Scene {
 
 
     update() {
-        if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.gameOver) {
-            this.openScene("trivia");
+        if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.gameOver && !this.storyLine) {
+            this.openScene("storyline");
+            this.timesUp = true;
+        } else if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.gameOver && this.storyLine) {
+            this.openScene("trivia")
             this.timesUp = true;
         }
        
