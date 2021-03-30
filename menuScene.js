@@ -17,28 +17,33 @@ class MenuScene extends Phaser.Scene {
     }
 
     create() {
+        const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+        
         // Background
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "desertBackground")
         this.background.setOrigin(0,0);
 
         // Sign to hold menu buttons
-        this.menuSign = this.add.image(config.width/2, config.height/2+30, "menuSign");
+        this.menuSign = this.add.image(screenCenterX, screenCenterY + 80, "menuSign").setOrigin(.5);
         this.menuSign.setScale(.5)
     
         // Game title text
-        this.add.text(235, 120, "Promised Land Journey", {
-            font: "70px Arial", 
-            fill: "white"
-        });
+        this.add.text(screenCenterX, screenCenterY - 120, "Promised Land", {fontSize: '100px', fontFamily: "balbeer", fill: "white"}).setOrigin(.5);
+        this.add.text(screenCenterX, screenCenterY - 30, "Journey", {fontSize: '90px', fontFamily: "balbeer", fill: "white"}).setOrigin(.5);
+
+        var style1 = {fontSize: '80px', fontFamily: "honest", fill: "white"};
 
         // Host text
-        const hostButton = this.add.text(350, 320, "HOST", {font: "bold 70px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("hostGame") });
+        const hostButton = this.add.text(screenCenterX - 170, screenCenterY + 100, "HOST", style1).setOrigin(.5);
+        hostButton.setInteractive().on('pointerup', () => { this.openScene("hostGame") });
         
         // Join text
-        const joinButton = this.add.text(650, 320, "JOIN", {font: "bold 70px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("joinGame") });
+        const joinButton = this.add.text(screenCenterX + 170, screenCenterY + 100, "JOIN", style1).setOrigin(.5)
+        joinButton.setInteractive().on('pointerup', () => { this.openScene("joinGame") });
 
         // Temporary Start Trivia Button to take user to trivia question
-        const startTrivia = this.add.text(40, 40, "Temporary Trivia Button", {font: "bold 40px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("input") });
+        const startTrivia = this.add.text(40, 40, "trivia", {font: "bold 40px balbeer", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("input") });
 
     }
 

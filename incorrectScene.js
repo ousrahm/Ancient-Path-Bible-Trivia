@@ -16,10 +16,16 @@ class IncorrectScene extends Phaser.Scene {
             gameState.checkForWin(false);
         } 
 
-        this.incorrectImage = this.add.image(config.width/2, config.height/2, "incorrect").setScale(.8);
+        const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+
+        var responses = ["Nice try! ", "Sorry! ", "Bummer! ", "Not this time! "]
+        var texts = responses[this.getRandomInt(4)] + "Incorrect answer.";
+        var style = {fontFamily: 'balbeer', fontSize: "70px", align: "center", color: '#ffffff'}
+        this.add.text(screenCenterX, screenCenterY, texts, style).setOrigin(.5);
 
         // Adds timer
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
         this.timesUp = false;
 
         // Adds one to number answered array of current player
@@ -31,6 +37,15 @@ class IncorrectScene extends Phaser.Scene {
 
     openScene(nameOfScene){
         this.scene.start(nameOfScene);
+    }
+
+    /**
+     * getRandomInt(max):
+     * @param {Number} max 
+     * @returns a random number from 0 to (max - 1);
+     */
+     getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
     }
 
     update() {

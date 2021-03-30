@@ -17,35 +17,35 @@ class TriviaScene extends Phaser.Scene {
         // Temporary back button
         const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
 
+        const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+
         // Adds trivia board
-        this.triviaBoard = this.add.image(config.width/2, 200, "triviaBoard");
+        this.triviaBoard = this.add.image(screenCenterX, 200, "triviaBoard");
         this.triviaBoard.scaleX = .78;
         this.triviaBoard.scaleY = .46;
 
         // Adds trivia question
-        var style = {fontFamily: 'Georgia', fontSize: "45px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
+        var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
         var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, questions.getRandomQuestion(gameState.getStages(currentPlayer)), style);
     
         
         // Adds timer
-        this.timerText = this.add.text(50, 60, "", { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"});
+        this.timerText = this.add.text(50, 60, "", { fontFamily: 'earth', fontSize: "50px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20 });
         this.answersAdded = false;
         this.timesUp = false;
-
-        // Adds whose turn it is
-        var style1 = {fontFamily: 'Arial', fontSize: "28px", align: "center", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
-
-        const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-        this.add.text(screenCenterX, 20, "Player " + (gameState.getCurrentPlayer()+1), style1).setOrigin(.5)
+        
 
         // Gets number correct and number incorrect
         var correct = gameState.getNumberCorrect(currentPlayer);
         var incorrect = gameState.getNumberAnswered(currentPlayer) - correct;
 
+        // Adds current player text
+        this.add.text(screenCenterX, 20, "Player " + (gameState.getCurrentPlayer()+1), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
+
         // Adds correct and incorrect counters
-        this.correctCounter = this.add.text(50, 120, "Correct: "+correct, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"})
-        this.incorrectCounter = this.add.text(50, 150, "Incorrect: "+incorrect, { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "center"})
+        this.incorrectCounter = this.add.text(30, 150, "Incorrect: "+incorrect, { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "center"})
 
         // Adds location of other players
         for (let i = 0; i < gameState.getNumberOfPlayers(); i++) {
@@ -75,8 +75,6 @@ class TriviaScene extends Phaser.Scene {
         } else {
             this.openScene("incorrect")
         }
-
-
     }
 
     /**
@@ -103,7 +101,7 @@ class TriviaScene extends Phaser.Scene {
         }
 
 
-        var style = {fontFamily: 'Georgia', fontSize: "30px", align: "left", color: '#ffffff'};
+        var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
         this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
@@ -139,8 +137,8 @@ class TriviaScene extends Phaser.Scene {
     addPlayerInfo(player) {
         var playerStage = gameState.getStages(player)+1
         var playerCorrect = gameState.getNumberCorrect(player);
-        var style = { fontFamily: 'Arial', fontSize: "25px", color: '#ffffff', align: "left"};
-        this.add.text(1000, 50 + (player*30), "P"+(player+1)+": " + "Stage " + playerStage + "." + playerCorrect, style);
+        var style = { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "left"};
+        this.add.text(30, 200 + (player*30), "P"+(player+1)+": " + "Stage " + playerStage + "." + playerCorrect, style);
     }
 
 
