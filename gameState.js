@@ -157,9 +157,6 @@ class GameState {
      * @param {Number} playerNumber 
      */
     changeCurrentPlayer() {
-        console.log("Changing current player!")
-        console.log(this.currentPlayer);
-        console.log("~>");
         if (this.getWinState() > 1) {
             if (this.currentWinnerIndex >= this.getWinState()-1 ) {
                 this.currentWinnerIndex = 0;
@@ -174,7 +171,6 @@ class GameState {
                 this.currentPlayer += 1;
             }
         }
-        console.log(this.currentPlayer);
         return this.currentPlayer;
     }
 
@@ -220,11 +216,9 @@ class GameState {
             if (i == this.currentPlayer) {
                 continue;
             } else if (i != this.currentPlayer && this.getStages(i) >= this.getStages(this.currentPlayer)) {
-                    //console.log("returning true")
                     return true;
             }
         }
-        //console.log("returning false")
         return false;
     }
 
@@ -235,7 +229,6 @@ class GameState {
      * @param {boolean} correct 
      */
     checkForWin(correct) {
-        console.log("Checking for win");
         if (this.getHasTied()) {
             var num = this.getNumberCorrect(this.getPlayersFinished()[0]);
             for (let i = 1; i < this.getPlayersFinished().length; i++) {
@@ -266,8 +259,6 @@ class GameState {
             }
         }
         this.winState = this.playersFinished.length;
-        console.log("Win State: " + this.winState);
-
     }
 
 

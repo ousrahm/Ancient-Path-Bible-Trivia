@@ -27,9 +27,6 @@ class TriviaScene extends Phaser.Scene {
 
         // Adds trivia question
         var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
-        console.log("Actual current player: " + gameState.getCurrentPlayer());
-        console.log("currentPlayer to get Random questions from: " + currentPlayer);
-        console.log("Stage of currentPlayer: " + gameState.getStages(currentPlayer));
         var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, questions.getRandomQuestion(gameState.getStages(currentPlayer)), style);
     
         

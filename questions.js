@@ -35,7 +35,7 @@ class Questions {
      * @param {Number} stage
      */
     getRandomQuestion(stage) {
-        console.log("getRandomQuestion stage: " + stage);
+        
         this.stage = stage.toString();
         this.index = this.getRandomInt(this.questionObject[this.stage].length);
 
