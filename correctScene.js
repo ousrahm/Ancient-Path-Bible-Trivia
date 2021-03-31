@@ -3,7 +3,7 @@
  * It will then open another trivia question for whoever is next in the game. 
  */
 
-class CorrectScene extends Phaser.Scene {
+ class CorrectScene extends Phaser.Scene {
     constructor() {
         super("correct");
     }
@@ -22,7 +22,8 @@ class CorrectScene extends Phaser.Scene {
         this.add.text(screenCenterX, screenCenterY, texts, style).setOrigin(.5);
 
         // Adds timer
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
+        //this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
         this.timesUp = false;
 
         const currentPlayer = gameState.getCurrentPlayer();
@@ -31,7 +32,7 @@ class CorrectScene extends Phaser.Scene {
 
         // Will change to true once player has completed this round
         this.threeCorrect = false;
-        if (gameState.getNumberCorrect(currentPlayer)==3) {
+        if (gameState.getNumberCorrect(currentPlayer)==3 && gameState.getWinState() <= 1) {
             if (currentPlayer == gameState.getNumberOfPlayers()-1) {
                 gameState.checkForWin(true);
             }
@@ -56,13 +57,21 @@ class CorrectScene extends Phaser.Scene {
     
 
     update() {
-        if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.threeCorrect) {
-            this.openScene("trivia");
-            this.timesUp = true;
-        }
+        
+        if (gameState.getWinState() > 1) {
+            if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
+                this.openScene("nextPlayer");
+                this.timesUp = true;
+            }
+        } else {
+            if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.threeCorrect) {
+                this.openScene("trivia");
+                this.timesUp = true;
+            }
 
-        if (this.timedEvent.repeatCount == 0 && gameState.getNumberCorrect(gameState.getCurrentPlayer()) == 3 && !this.timesUp && this.threeCorrect) {
-            this.openScene("newStage");
+            if (this.timedEvent.repeatCount == 0 && gameState.getNumberCorrect(gameState.getCurrentPlayer()) == 3 && !this.timesUp && this.threeCorrect) {
+                this.openScene("newStage");
+            }
         }
     }
 }

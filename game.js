@@ -3,7 +3,7 @@ var config = {
     height: 600,
     backgroundColor: 0x0000000,
     scale: { parent: 'mygame', autoCenter: Phaser.Scale.CENTER_BOTH }, 
-    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, tempInput, StoryLine]
+    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, tempInput, StoryLine, TieScene, TrueTieScene]
 }
 window.onload = function() {
     // Created a new Game instance that we can configure

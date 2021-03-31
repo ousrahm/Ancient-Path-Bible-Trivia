@@ -3,7 +3,7 @@
  * It will then open another trivia question for whoever is next in the game. 
  */
 
-class IncorrectScene extends Phaser.Scene {
+ class IncorrectScene extends Phaser.Scene {
     constructor() {
         super("incorrect");
     }
@@ -12,7 +12,12 @@ class IncorrectScene extends Phaser.Scene {
     }
 
     create() {
-        if (gameState.getCurrentPlayer() == gameState.getNumberOfPlayers()-1) {
+        if (gameState.getWinState() > 1) {
+            if (gameState.getCurrentPlayer() == gameState.getPlayersFinished()[gameState.getWinState()-1]) {
+                gameState.checkForWin(false);
+            }
+
+        } else if (gameState.getCurrentPlayer() == gameState.getNumberOfPlayers()-1) {
             gameState.checkForWin(false);
         } 
 
@@ -25,7 +30,8 @@ class IncorrectScene extends Phaser.Scene {
         this.add.text(screenCenterX, screenCenterY, texts, style).setOrigin(.5);
 
         // Adds timer
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
+        //this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
         this.timesUp = false;
 
         // Adds one to number answered array of current player

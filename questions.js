@@ -19,7 +19,7 @@ class Questions {
      * @returns {Object} questionObject
      */
     setUpOriginalData(data) {
-        var questionObject = {"0":[], "1":[], "2":[], "3":[]};
+        var questionObject = {"0":[], "1":[], "2":[], "3":[], "4":[]};
         
         for (let i = 1; i < data.length; i++) {
             var stage = data[i][5];
@@ -35,6 +35,7 @@ class Questions {
      * @param {Number} stage
      */
     getRandomQuestion(stage) {
+        console.log("getRandomQuestion stage: " + stage);
         this.stage = stage.toString();
         this.index = this.getRandomInt(this.questionObject[this.stage].length);
 

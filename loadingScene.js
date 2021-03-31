@@ -16,6 +16,7 @@ class LoadingScene extends Phaser.Scene {
         this.load.video('autumnLoop', 'images/autumn.mp4', 'loadeddata', false, true);
         this.load.video('rainbowLoop', 'images/rainbow.mp4', 'loadeddata', false, true);
         this.load.video('summerLoop', 'images/summer.mp4', 'loadeddata', false, true);
+        this.load.video('finaleLoop', 'images/finale.mp4', 'loadeddata', false, true);
     }
 
     create() {

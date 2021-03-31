@@ -33,7 +33,7 @@ class newStageScene extends Phaser.Scene {
             this.openScene('victory');
         } else if (gameState.getWinState() > 1) {
             this.gameOver = true;
-            // SEND TO TIEBREAKER SCENE
+            this.openScene('tie');
         }else {
             // Added text about player moving onto next stage and change current player
             const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;

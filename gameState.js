@@ -8,7 +8,7 @@ class GameState {
         /**Index of current player (initialized to 0 (PLAYER1)) */
         this.currentPlayer = 0;
 
-        this.stageNames = ["desertLoop", "autumnLoop", "rainbowLoop", "summerLoop"];
+        this.stageNames = ["desertLoop", "autumnLoop", "rainbowLoop", "summerLoop", "finaleLoop"];
         
         /**
          * numberCorrect    The number of questions answered correctly in each player's current stage. 
@@ -36,6 +36,21 @@ class GameState {
          * 2+ - two or more players have finished
          */
         this.winState = 0;
+
+        /**
+         * Keeps track of which players to let play during tiebreaker phase
+         */
+         this.currentWinnerIndex = 99;
+
+         /**
+          * Keeps track of how many rounds have passed during tiebreaker phase
+          */
+         this.tiebreakerRounds = 0;
+ 
+         /**
+          * Keeps track of whether the initial Tie scene has run
+          */
+         this.hasTied = false;
     }
 
     setUpGameState(numberOfPlayers) {
@@ -72,6 +87,10 @@ class GameState {
     getCurrentPlayer() {
         return this.currentPlayer;
     }
+
+    // setCurrentPlayer(p) {
+    //     this.currentPlayer = p;
+    // }
 
     getPlayers() {
         return this.players;
@@ -110,6 +129,26 @@ class GameState {
         return this.finalStage;
     }
 
+    getCurrentWinnerIndex(){
+        return this.currentWinnerIndex;
+    }
+
+    getTieBreakerRounds(){
+        return this.tiebreakerRounds;
+    }
+
+    addTieBreakerRound(){
+        this.tiebreakerRounds++;
+    }
+
+    getHasTied(){
+        return this.hasTied;
+    }
+
+    setHasTied(b) {
+        this.hasTied = b;
+    }
+
 
     /**
      * Methods to change current player, reset number correct for a player, 
@@ -118,11 +157,24 @@ class GameState {
      * @param {Number} playerNumber 
      */
     changeCurrentPlayer() {
-        if (this.currentPlayer == this.numberOfPlayers-1 ) {
-            this.currentPlayer = 0;
+        console.log("Changing current player!")
+        console.log(this.currentPlayer);
+        console.log("~>");
+        if (this.getWinState() > 1) {
+            if (this.currentWinnerIndex >= this.getWinState()-1 ) {
+                this.currentWinnerIndex = 0;
+            } else {
+                this.currentWinnerIndex += 1;
+            }
+            this.currentPlayer = this.getPlayersFinished()[this.currentWinnerIndex];
         } else {
-            this.currentPlayer += 1;
+            if (this.currentPlayer == this.numberOfPlayers-1 ) {
+                this.currentPlayer = 0;
+            } else {
+                this.currentPlayer += 1;
+            }
         }
+        console.log(this.currentPlayer);
         return this.currentPlayer;
     }
 
@@ -153,6 +205,12 @@ class GameState {
         this.resetNumberAnswered(playerNumber);
     }
 
+    // placeInTiebreakerStage(){
+    //     for (let i = 0; i < this.getWinState; i++) {
+    //         this.currentStages[this.playersFinished[i]] = this.getFinalStage();
+    //     }
+    // }
+
     /**
      * Checks to see if the current stage has been reached yet.
      * Output: false if nobody has reached the current stage and true if somebody has
@@ -162,11 +220,11 @@ class GameState {
             if (i == this.currentPlayer) {
                 continue;
             } else if (i != this.currentPlayer && this.getStages(i) >= this.getStages(this.currentPlayer)) {
-                    console.log("returning true")
+                    //console.log("returning true")
                     return true;
             }
         }
-        console.log("returnin false")
+        //console.log("returning false")
         return false;
     }
 
@@ -177,19 +235,38 @@ class GameState {
      * @param {boolean} correct 
      */
     checkForWin(correct) {
-
-        for (let i = 0; i < this.getNumberOfPlayers(); i++) {
-            if (i == this.getNumberOfPlayers()-1) {
-                if (correct) {
-                    if (this.getStages(i) == this.finalStage-1) {
-                        this.playersFinished.push(i);
-                    }
+        console.log("Checking for win");
+        if (this.getHasTied()) {
+            var num = this.getNumberCorrect(this.getPlayersFinished()[0]);
+            for (let i = 1; i < this.getPlayersFinished().length; i++) {
+                if (num > this.getNumberCorrect(this.getPlayersFinished()[i])) {
+                    this.playersFinished.splice(i, 1);
+                    i--;
+                } else if (num < this.getNumberCorrect(this.getPlayersFinished()[i])) {
+                    num = this.getNumberCorrect(this.getPlayersFinished()[i]);
+                    this.playersFinished.splice(0, 1);
+                    i--;
+                } else {
+                    this.addTieBreakerRound();
                 }
-            } else if (this.getStages(i) == this.finalStage) {
-                this.playersFinished.push(i);
+            }
+        } else {
+
+            for (let i = 0; i < this.getNumberOfPlayers(); i++) {
+                if (i == this.getNumberOfPlayers()-1) {
+                    if (correct) {
+                        if (this.getStages(i) == this.finalStage-1 && this.getNumberCorrect(i) == 3) {
+                            this.playersFinished.push(i);
+                            this.advanceStage(i);
+                        }
+                    }
+                } else if (this.getStages(i) == this.finalStage) {
+                    this.playersFinished.push(i);
+                }
             }
         }
         this.winState = this.playersFinished.length;
+        console.log("Win State: " + this.winState);
 
     }
 
