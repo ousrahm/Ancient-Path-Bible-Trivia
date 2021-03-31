@@ -27,9 +27,6 @@ class TieScene extends Phaser.Scene {
         this.add.text(screenCenterX, screenCenterY, message, style).setOrigin(.5);
 
         if (!gameState.getHasTied()) {
-            for (let i = 0; i < gameState.getWinState(); i++) {
-                console.log("Players finished (" + i + "):" + gameState.getPlayersFinished()[i]);
-            }
 
             //gameState.setCurrentPlayer(gameState.getPlayersFinished[0]);
             //gameState.changeCurrentPlayer();

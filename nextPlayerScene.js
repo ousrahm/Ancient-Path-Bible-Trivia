@@ -8,7 +8,6 @@ class nextPlayerScene extends Phaser.Scene {
 
     create() {
         var currentPlayer = gameState.getCurrentPlayer();
-        console.log("old currentPlayer: " + currentPlayer);
 
         // Adds timer
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
@@ -35,9 +34,7 @@ class nextPlayerScene extends Phaser.Scene {
             const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
             const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
             var style = {fontFamily: 'balbeer', fontSize: "80px", align: "center", wordWrap: {width: 1000, useAdvancedWrap: true}, color: '#ffffff'};
-            console.log("currentPlayer: " + currentPlayer);
             this.add.text(screenCenterX, screenCenterY, "Player " + (currentPlayer+1) + "'s turn is over. Player " + (gameState.changeCurrentPlayer()+1) + " get ready!!", style).setOrigin(.5);
-            console.log("new currentPlayer: " + gameState.getCurrentPlayer());
         
         }
 
