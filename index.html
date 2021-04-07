@@ -13,8 +13,7 @@
             @font-face {font-family: bavaria;src: url('fonts/Bavaria.ttf');font-weight:400;font-weight:normal;}
             @font-face {font-family: honest;src: url('fonts/Be\ Honest.ttf');font-weight:400;font-weight:normal;}
             @font-face {font-family: earth;src: url('fonts/Be\ Kind\ To\ The\ Earth.otf');font-weight:400;font-weight:normal;}
-
-      </style>
+        </style>
         <script type="text/javascript" src="phaser.min.js"></script>
         <script type="text/javascript" src="scenes/gameState.js"></script>
         <script type="text/javascript" src="scenes/loadingScene.js"></script>
@@ -32,7 +31,7 @@
         <script type="text/javascript" src="scenes/victoryScene.js"></script>
         <script type="text/javascript" src="scenes/tieScene.js"></script>
         <script type="text/javascript" src="scenes/trueTieScene.js"></script>
-        <script type="text/javascript" src="scenes/game.js"></script>
+        <script type="text/javascript" src="game.js"></script>
         <div id='mygame'></div> 
     </head>
     <body>
@@ -45,5 +44,34 @@
         <div style="font-family:honest; position:absolute; left:-1000px; visibility:hidden;">.</div>
         <div style="font-family:earth; position:absolute; left:-1000px; visibility:hidden;">.</div>
 
+        <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+
+        <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+        <script>
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            var firebaseConfig = {
+              apiKey: "AIzaSyCF_3NhU55DeaMHPsVZVbne6hAyX85fh1o",
+              authDomain: "promised-land-journey-game.firebaseapp.com",
+              databaseURL: "https://promised-land-journey-game-default-rtdb.firebaseio.com",
+              projectId: "promised-land-journey-game",
+              storageBucket: "promised-land-journey-game.appspot.com",
+              messagingSenderId: "671482883052",
+              appId: "1:671482883052:web:716262c10ac3246b116ec9",
+              measurementId: "G-MPN1DGWEJS"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+          </script>
+        <!-- firebase deploy --only hosting -->
     </body>
 </html>
