@@ -1,28 +1,6 @@
-// // Firebase App (the core Firebase SDK) is always required and must be listed first
-// import firebase from "firebase/app";
-// // If you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
-// // import * as firebase from "firebase/app"
 
-// // If you enabled Analytics in your project, add the Firebase SDK for Analytics
-// import "firebase/analytics";
+var database = firebase.database();
 
-// // Add the Firebase products that you want to use
-// import "firebase/auth";
-// import "firebase/firestore";
-
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//     apiKey: "AIzaSyCF_3NhU55DeaMHPsVZVbne6hAyX85fh1o",
-//     authDomain: "promised-land-journey-game.firebaseapp.com",
-//     databaseURL: "https://promised-land-journey-game-default-rtdb.firebaseio.com",
-//     projectId: "promised-land-journey-game",
-//     storageBucket: "promised-land-journey-game.appspot.com",
-//     messagingSenderId: "671482883052",
-//     appId: "1:671482883052:web:716262c10ac3246b116ec9",
-//     measurementId: "G-MPN1DGWEJS"
-// };
-// // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
 
 
 var config = {
