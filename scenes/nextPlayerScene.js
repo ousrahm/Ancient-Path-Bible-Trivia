@@ -34,7 +34,7 @@ class nextPlayerScene extends Phaser.Scene {
             const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
             const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
             var style = {fontFamily: 'balbeer', fontSize: "80px", align: "center", wordWrap: {width: 1000, useAdvancedWrap: true}, color: '#ffffff'};
-            this.add.text(screenCenterX, screenCenterY, "Player " + (currentPlayer+1) + "'s turn is over. Player " + (gameState.changeCurrentPlayer()+1) + " get ready!!", style).setOrigin(.5);
+            this.add.text(screenCenterX, screenCenterY, gameState.getPlayerNames(currentPlayer) + "'s turn is over. " + gameState.getPlayerNames(gameState.changeCurrentPlayer()) + " get ready!!", style).setOrigin(.5);
         
         }
 

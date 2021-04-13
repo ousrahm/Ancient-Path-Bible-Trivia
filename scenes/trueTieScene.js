@@ -12,10 +12,10 @@ class TrueTieScene extends Phaser.Scene {
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
         var style = {fontFamily: 'Arial', fontSize: "60px", align: "center", wordWrap: {width: 500, useAdvancedWrap: true}, color: '#ffffff'};
 
-        var message = "True tie game! Player " + (gameState.getPlayersFinished()[0] + 1);
+        var message = "True tie game! " + gameState.getPlayerNames(gameState.getPlayersFinished()[0]);
 
         for (let i = 1; i < gameState.getPlayersFinished().length; i++) {
-            message += " and Player " + (gameState.getPlayersFinished()[i] + 1);
+            message += " and " + gameState.getPlayerNames(gameState.getPlayersFinished()[i]);
         }
 
         message += " have all reached the Promised Land!!!"

@@ -4,6 +4,7 @@ class GameState {
         this.numberOfPlayers;
         this.playerEnums;
         this.players;
+        this.playerNames = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
         /**Index of current player (initialized to 0 (PLAYER1)) */
         this.currentPlayer = 0;
@@ -51,18 +52,16 @@ class GameState {
           * Keeps track of whether the initial Tie scene has run
           */
          this.hasTied = false;
+
+         /**
+          * Keeps track of current game's database reference value
+          */
+         this.gameRef;
     }
 
-    setUpGameState(numberOfPlayers) {
-        /** Commented this out for testing purposes for one player */
-        // if(numberOfPlayers < 2) {
-        //     throw "numberOfPlayers argument is < 2."
-        // } else 
-        // if (numberOfPlayers > 4) { 
-        //     throw "numberOfPlayers argument is > 4."
-        // } else if (typeof numberOfPlayers != "number"){
-        //     throw "numberOfPlayers argument is not a Number."
-        // }  
+    setUpGameState(numberOfPlayers, gameRef) {
+        
+        this.gameRef = gameRef;
         /**Player's enumeration equals their respective index in the other property arrays. */
         this.numberOfPlayers = numberOfPlayers;
         this.playerEnums = {PLAYER1:0, PLAYER2:1, PLAYER3:2, PLAYER4:3};
@@ -81,9 +80,14 @@ class GameState {
     }
 
     /**
-     * Getters for current player, player numbers, stage numbers, number of questions correct,
+     * Getters for current player, game reference, player numbers, stage numbers, number of questions correct,
      * number of players, players finished, win state, & number of questions answered.
      */
+
+    getPlayerNames(player) {
+        return this.playerNames[player];
+    }
+
     getCurrentPlayer() {
         return this.currentPlayer;
     }
@@ -91,6 +95,10 @@ class GameState {
     // setCurrentPlayer(p) {
     //     this.currentPlayer = p;
     // }
+
+    getGameRef() {
+        return this.gameRef;
+    }
 
     getPlayers() {
         return this.players;
@@ -171,7 +179,21 @@ class GameState {
                 this.currentPlayer += 1;
             }
         }
+        var turnRef = database.ref('promised-land-journey-game').child(this.getGameRef()).child("turn");
+        turnRef.set(this.currentPlayer);
         return this.currentPlayer;
+    }
+
+    async changePlayerName(player) {
+        var promise = database.ref("promised-land-journey-game").child(this.getGameRef()).get("P"+(player+1));
+        var name;
+        await promise.then(
+            function(snapshot) {
+                var data = snapshot.val();
+                name = data['P1'];
+            }, function(error){}
+        )
+        this.playerNames[player] = name;
     }
 
     resetNumberCorrect(playerNumber) {

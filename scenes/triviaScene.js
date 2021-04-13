@@ -42,7 +42,7 @@ class TriviaScene extends Phaser.Scene {
         var incorrect = gameState.getNumberAnswered(currentPlayer) - correct;
 
         // Adds current player text
-        this.add.text(screenCenterX, 20, "Player " + (gameState.getCurrentPlayer()+1), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
+        this.add.text(screenCenterX, 20, gameState.getPlayerNames(gameState.getCurrentPlayer()), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
 
         // Adds correct and incorrect counters
         this.incorrectCounter = this.add.text(30, 150, "Incorrect: "+incorrect, { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "center"})
@@ -137,8 +137,8 @@ class TriviaScene extends Phaser.Scene {
     addPlayerInfo(player) {
         var playerStage = gameState.getStages(player)+1
         var playerCorrect = gameState.getNumberCorrect(player);
-        var style = { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "left"};
-        this.add.text(30, 200 + (player*30), "P"+(player+1)+": " + "Stage " + playerStage + "." + playerCorrect, style);
+        var style = { fontFamily: 'earth', fontSize: "20px", color: '#ffffff', align: "left"};
+        this.add.text(30, 200 + (player*30), gameState.getPlayerNames(player)+": " + "Stage " + playerStage + "." + playerCorrect, style);
     }
 
 
