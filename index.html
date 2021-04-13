@@ -58,6 +58,7 @@
         <script type="text/javascript" src="scenes/victoryScene.js"></script>
         <script type="text/javascript" src="scenes/tieScene.js"></script>
         <script type="text/javascript" src="scenes/trueTieScene.js"></script>
+        <script type="text/javascript" src="scenes/namingScene.js"></script>
         <script type="text/javascript" src="game.js"></script>
         <div id='mygame'></div> 
     </head>
@@ -71,8 +72,10 @@
         <div style="font-family:honest; position:absolute; left:-1000px; visibility:hidden;">.</div>
         <div style="font-family:earth; position:absolute; left:-1000px; visibility:hidden;">.</div>
 
-        
-        
+        <div style="display: block; margin: 0 auto;">
+            <textarea id="nameBox" maxlength=15 style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;">Leave empty for default</textarea>
+            <button id="enterButton" style="display:block; visibility: hidden; text-align: center; margin-right: auto; margin-left: auto;">ENTER</button>
+        </div>
         <!-- firebase deploy --only hosting -->
     </body>
 </html>

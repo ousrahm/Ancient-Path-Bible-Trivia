@@ -19,9 +19,9 @@ class newStageScene extends Phaser.Scene {
         this.storyLine = gameState.reachedCurrentStage();
 
         var nextStage = gameState.getStages(currentPlayer);
-        var texts = "Player " + (currentPlayer+1) + " has moved on to Stage " + (nextStage+1) + "!! Player " + (gameState.changeCurrentPlayer()+1) + " get ready!!";
+        var texts = gameState.getPlayerNames(currentPlayer) + " has moved on to Stage " + (nextStage+1) + "!! " + gameState.getPlayerNames(gameState.changeCurrentPlayer()) + " get ready!!";
         if (gameState.getStages(currentPlayer) == gameState.getFinalStage()) {
-            texts = "Player " + (currentPlayer+1) + " has finished the final stage!!";
+            texts = gameState.getPlayerNames(currentPlayer) + " has finished the final stage!!";
         }
 
 

@@ -13,7 +13,7 @@ class victoryScene extends Phaser.Scene {
         var playerNumber = gameState.getPlayersFinished()[0];
         var style = {fontFamily: 'Arial', fontSize: "60px", align: "center", wordWrap: {width: 500, useAdvancedWrap: true}, color: '#ffffff'};
 
-        this.add.text(screenCenterX, screenCenterY, "Congratulations Player " + (playerNumber+1) +"!! :)", style).setOrigin(.5);
+        this.add.text(screenCenterX, screenCenterY, "Congratulations "+ gameState.getPlayerNames(gameState.getPlayersFinished()[0]) +"!! :)", style).setOrigin(.5);
 
     }
 

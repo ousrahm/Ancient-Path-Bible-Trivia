@@ -24,10 +24,28 @@ class tempInput extends Phaser.Scene {
 
     }
 
-    setUpGame(numberOfPlayers) {
-        database.ref("promised-land-journey-game").set('game1', function onComplete(a){console.log(a)} );
-        gameState.setUpGameState(numberOfPlayers);
-        this.openScene("trivia");
+    async setUpGame(numberOfPlayers) {
+        /**
+         * Started a new game in the database.
+         * Grabbed the reference value to that game.
+         * Set up a new GameState instance with the number of players and the reference value.
+         */
+        var game = database.ref("promised-land-journey-game").push();
+        game.set({
+            "Player Number": numberOfPlayers,
+            "P1": "Player 1",
+            "P2": "Player 2",
+            "P3": "Player 3",
+            "P4": "Player 4",
+            "turn": 0
+        })
+        var gameRef;
+        await game.then(function(result){
+            gameRef = game.path.pieces_[1];
+        }, function(error){});
+
+        gameState.setUpGameState(numberOfPlayers, gameRef);
+        this.openScene("naming");
     }
 
     openScene(nameOfScene){
