@@ -8,23 +8,40 @@ var config = {
     height: 600,
     backgroundColor: 0x0000000,
     scale: { parent: 'mygame', autoCenter: Phaser.Scale.CENTER_BOTH }, 
-    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, tempInput, StoryLine, TieScene, TrueTieScene, namingScene]
+    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, lobbyScene, StoryLine, TieScene, TrueTieScene, namingScene]
 }
+
 window.onload = function() {
     // Created a new Game instance that we can configure
     var game = new Phaser.Game(config);
     
+    // Handler for naming box and naming enter button
     document.getElementById('enterButton').addEventListener("mouseup", 
     function(){
         var name = document.getElementById('nameBox').value;
 
-        var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameRef()).child('P1');
+        var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('P1');
         playerRef.set(name);
 
         gameState.changePlayerName(0);
 
         document.getElementById('nameBox').style.visibility= "hidden";
         document.getElementById('enterButton').style.visibility="hidden";
+    });
+
+    // Handler for code box and code enter button
+    document.getElementById('enterCode').addEventListener("mouseup", 
+    function(){
+        var code = document.getElementById('codeBox').value;
+        if (code.length < 4) {
+            document.getElementById('codeBox').value = "Code should be 4 characters."
+            return;
+        }
+        gameState.setUpGameCodeFromJoin(code);
+        console.log(code);
+
+        document.getElementById('codeBox').style.visibility= "hidden";
+        document.getElementById('enterCode').style.visibility="hidden";
     });
 }
 
