@@ -45,7 +45,7 @@
         <script type="text/javascript" src="scenes/gameState.js"></script>
         <script type="text/javascript" src="scenes/loadingScene.js"></script>
         <script type="text/javascript" src="scenes/menuScene.js"></script>
-        <script type="text/javascript" src="scenes/tempInputScene.js"></script>
+        <script type="text/javascript" src="scenes/lobbyScene.js"></script>
         <script type="text/javascript" src="scenes/hostScene.js"></script>
         <script type="text/javascript" src="scenes/joinScene.js"></script>
         <script type="text/javascript" src="scenes/triviaScene.js"></script>
@@ -73,8 +73,12 @@
         <div style="font-family:earth; position:absolute; left:-1000px; visibility:hidden;">.</div>
 
         <div style="display: block; margin: 0 auto;">
-            <textarea id="nameBox" maxlength=15 style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;">Leave empty for default</textarea>
+            <textarea id="nameBox" maxlength=15 style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;"></textarea>
             <button id="enterButton" style="display:block; visibility: hidden; text-align: center; margin-right: auto; margin-left: auto;">ENTER</button>
+            
+            <textarea id="codeBox" maxlength=4 style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;"></textarea>
+            <button id="enterCode" style="display:block; visibility: hidden; text-align: center; margin-right: auto; margin-left: auto;">ENTER</button>
+        
         </div>
         <!-- firebase deploy --only hosting -->
     </body>

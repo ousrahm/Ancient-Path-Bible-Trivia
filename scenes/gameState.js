@@ -1,6 +1,8 @@
 class GameState {
     constructor() {
 
+        this.myPlayer;
+
         this.numberOfPlayers;
         this.playerEnums;
         this.players;
@@ -12,23 +14,21 @@ class GameState {
         this.stageNames = ["desertLoop", "autumnLoop", "rainbowLoop", "summerLoop", "finaleLoop"];
         
         /**
-         * numberCorrect    The number of questions answered correctly in each player's current stage. 
-         * numberAnswered   The number of questions answered in each player's current stage. 
-         * currentStages    Each player's current stage number (1-12).
+         * numberCorrect        The number of questions answered correctly in each player's current stage. 
+         * numberAnswered       The number of questions answered in each player's current stage. 
+         * currentStages        Each player's current stage number (1-12).
+         * gameCode             Code of game.
+         * finalState           Final stage of the game.
+         * playersFinished      Numbers of players that have finished the game.
+         * currentWinnerIndex   Keeps track of which players to let play during tiebreaker phase
          */
         this.numberCorrect = [];
         this.numberAnswered = [];
         this.currentStages = [];
-
-        /**
-         * Final Stage
-         */
+        this.gameCode;
         this.finalStage = 4;
-
-        /**
-         * Players that have finished the final stage
-         */
-         this.playersFinished = [];
+        this.playersFinished = [];
+        this.currentWinnerIndex = 99;
 
         /**
          * Win State:
@@ -38,10 +38,6 @@ class GameState {
          */
         this.winState = 0;
 
-        /**
-         * Keeps track of which players to let play during tiebreaker phase
-         */
-         this.currentWinnerIndex = 99;
 
          /**
           * Keeps track of how many rounds have passed during tiebreaker phase
@@ -53,15 +49,25 @@ class GameState {
           */
          this.hasTied = false;
 
-         /**
-          * Keeps track of current game's database reference value
-          */
-         this.gameRef;
+    
     }
 
-    setUpGameState(numberOfPlayers, gameRef) {
+    setMyPlayer(number) {
+        this.myPlayer = number;
+        console.log(this.myPlayer);
+    }
+
+    async setUpGameCode() {
+        var code = await database.ref('promised-land-journey-game').child('gameCode').get();
+        this.gameCode = code.val();
+    }
+
+    setUpGameCodeFromJoin(code){
+        this.gameCode = code;
+    }
+    setUpGameState(numberOfPlayers) {
         
-        this.gameRef = gameRef;
+
         /**Player's enumeration equals their respective index in the other property arrays. */
         this.numberOfPlayers = numberOfPlayers;
         this.playerEnums = {PLAYER1:0, PLAYER2:1, PLAYER3:2, PLAYER4:3};
@@ -80,9 +86,17 @@ class GameState {
     }
 
     /**
-     * Getters for current player, game reference, player numbers, stage numbers, number of questions correct,
-     * number of players, players finished, win state, & number of questions answered.
+     * Getters for game code, current player, game reference, player numbers, stage numbers, 
+     * number of questions correct, number of players, players finished, win state, & number of questions answered.
      */
+
+    getMyPlayer() {
+        return this.myPlayer;
+    }
+
+    getGameCode() {
+        return this.gameCode;
+    }
 
     getPlayerNames(player) {
         return this.playerNames[player];
@@ -90,14 +104,6 @@ class GameState {
 
     getCurrentPlayer() {
         return this.currentPlayer;
-    }
-
-    // setCurrentPlayer(p) {
-    //     this.currentPlayer = p;
-    // }
-
-    getGameRef() {
-        return this.gameRef;
     }
 
     getPlayers() {
@@ -153,10 +159,6 @@ class GameState {
         return this.hasTied;
     }
 
-    setHasTied(b) {
-        this.hasTied = b;
-    }
-
 
     /**
      * Methods to change current player, reset number correct for a player, 
@@ -179,13 +181,13 @@ class GameState {
                 this.currentPlayer += 1;
             }
         }
-        var turnRef = database.ref('promised-land-journey-game').child(this.getGameRef()).child("turn");
+        var turnRef = database.ref('promised-land-journey-game').child(this.getGameCode()).child("turn");
         turnRef.set(this.currentPlayer);
         return this.currentPlayer;
     }
 
     async changePlayerName(player) {
-        var promise = database.ref("promised-land-journey-game").child(this.getGameRef()).get("P"+(player+1));
+        var promise = database.ref("promised-land-journey-game").child(this.getGameCode()).get("P"+(player+1));
         var name;
         await promise.then(
             function(snapshot) {
@@ -194,6 +196,10 @@ class GameState {
             }, function(error){}
         )
         this.playerNames[player] = name;
+    }
+
+    setHasTied(b) {
+        this.hasTied = b;
     }
 
     resetNumberCorrect(playerNumber) {
@@ -222,12 +228,6 @@ class GameState {
         this.resetNumberCorrect(playerNumber);
         this.resetNumberAnswered(playerNumber);
     }
-
-    // placeInTiebreakerStage(){
-    //     for (let i = 0; i < this.getWinState; i++) {
-    //         this.currentStages[this.playersFinished[i]] = this.getFinalStage();
-    //     }
-    // }
 
     /**
      * Checks to see if the current stage has been reached yet.
