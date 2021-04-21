@@ -54,8 +54,9 @@ class HostScene extends Phaser.Scene {
             "P3": "Player 3",
             "P4": "Player 4",
             "turn": 0,
-            "code": gameState.getGameCode(),
-            "joined": 0
+            "joined": 0,
+            "started": false
+
         })
         gameState.setUpGameState(numberOfPlayers); 
         this.openScene("naming");
