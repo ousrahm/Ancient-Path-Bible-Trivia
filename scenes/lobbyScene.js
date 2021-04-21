@@ -37,6 +37,7 @@ class lobbyScene extends Phaser.Scene {
         }
 
         if (numJoined == gameState.getNumberOfPlayers()) {
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').set(true);
             this.readyButton = this.add.text(this.screenCenterX, this.screenCenterY + 270, "READY", {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5);
             this.readyButton.setInteractive().on('pointerup', () => { this.openScene('trivia')});
         }
