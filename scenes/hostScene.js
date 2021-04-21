@@ -59,6 +59,11 @@ class HostScene extends Phaser.Scene {
 
         })
         gameState.setUpGameState(numberOfPlayers); 
+
+        var getJoined = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").get();
+        gameState.setMyPlayer(getJoined.val());
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").set(getJoined.val()+1);    
+
         this.openScene("naming");
     }
 
