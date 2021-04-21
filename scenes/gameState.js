@@ -100,6 +100,9 @@ class GameState {
     getPlayerNames(player) {
         return this.playerNames[player];
     }
+    getPlayerNamesArray() {
+        return this.playerNames;
+    }
 
     getCurrentPlayer() {
         return this.currentPlayer;
@@ -191,7 +194,7 @@ class GameState {
         await promise.then(
             function(snapshot) {
                 var data = snapshot.val();
-                name = data['P1'];
+                name = data["P"+(player+1)];
             }, function(error){}
         )
         this.playerNames[player] = name;

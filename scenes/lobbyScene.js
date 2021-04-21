@@ -21,7 +21,7 @@ class lobbyScene extends Phaser.Scene {
         })
 
         this.everyoneHasJoined = false;
-        
+        this.stopLooping = false;
     }
 
     openScene(nameOfScene){
@@ -45,6 +45,7 @@ class lobbyScene extends Phaser.Scene {
         }
 
         if (numJoined == gameState.getNumberOfPlayers()) {
+            
             this.everyoneHasJoined = true;
             this.readyButton = this.add.text(this.screenCenterX, this.screenCenterY + 270, "READY", {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5);
             this.readyButton.setInteractive().on('pointerup', async () => {
@@ -60,14 +61,16 @@ class lobbyScene extends Phaser.Scene {
         }
     }
 
-    update() {
+    async update() {
         if (this.timedEvent.repeatCount % 3 == 0){
             this.printPlayers();
         }
 
-        if (gameStarted) {
+        // NEED TO LOOK INTO WHY ITS CALLING openScene(trivia) more than once
+        if (gameStarted && !this.stopLooping) {
+            this.stopLooping = true;
             for (let i = 0; i < 4; i++) {
-                gameState.changePlayerName(i);
+                await gameState.changePlayerName(i);
             }
             this.openScene('trivia');
         }
