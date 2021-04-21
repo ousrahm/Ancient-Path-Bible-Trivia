@@ -49,6 +49,9 @@ window.onload = function() {
 
         document.getElementById('codeBox').style.visibility= "hidden";
         document.getElementById('enterCode').style.visibility="hidden";
+
+        var numberOfPlayers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("Player Number").get();
+        gameState.setUpGameState(numberOfPlayers.val()); 
     });
 }
 
