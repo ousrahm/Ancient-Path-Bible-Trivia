@@ -50,9 +50,7 @@ class TriviaScene extends Phaser.Scene {
 
         // Adds location of other players
         for (let i = 0; i < gameState.getNumberOfPlayers(); i++) {
-            console.log("Before: "+ gameState.getPlayerNamesArray())
             this.addPlayerInfo(i, gameState.getPlayerNamesArray()[i]);
-            console.log("After: " + gameState.getPlayerNamesArray())
         }
 
     }
