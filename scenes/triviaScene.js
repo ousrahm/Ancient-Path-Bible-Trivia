@@ -50,7 +50,9 @@ class TriviaScene extends Phaser.Scene {
 
         // Adds location of other players
         for (let i = 0; i < gameState.getNumberOfPlayers(); i++) {
-            this.addPlayerInfo(i);
+            console.log("Before: "+ gameState.getPlayerNamesArray())
+            this.addPlayerInfo(i, gameState.getPlayerNamesArray()[i]);
+            console.log("After: " + gameState.getPlayerNamesArray())
         }
 
     }
@@ -135,11 +137,11 @@ class TriviaScene extends Phaser.Scene {
      * Adds text to the screen displaying the player's number, stage, and number correct in that stage.
      * @param {Number} player 
      */
-    addPlayerInfo(player) {
+    addPlayerInfo(player, name) {
         var playerStage = gameState.getStages(player)+1
         var playerCorrect = gameState.getNumberCorrect(player);
         var style = { fontFamily: 'earth', fontSize: "20px", color: '#ffffff', align: "left"};
-        this.add.text(30, 200 + (player*30), gameState.getPlayerNames(player)+": " + "Stage " + playerStage + "." + playerCorrect, style);
+        this.add.text(30, 200 + (player*30), name+": " + "Stage " + playerStage + "." + playerCorrect, style);
     }
 
 
