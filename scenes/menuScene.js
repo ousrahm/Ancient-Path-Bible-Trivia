@@ -40,8 +40,8 @@ class MenuScene extends Phaser.Scene {
         const joinButton = this.add.text(screenCenterX + 170, screenCenterY + 100, "JOIN", style1).setOrigin(.5)
         joinButton.setInteractive().on('pointerup', () => { this.openScene("joinGame") });
 
-        // Temporary Start Trivia Button to take user to trivia question
-        const startTrivia = this.add.text(40, 40, "trivia", {font: "bold 40px balbeer", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("input") });
+        // // Temporary Start Trivia Button to take user to trivia question
+        // const startTrivia = this.add.text(40, 40, "trivia", {font: "bold 40px balbeer", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("input") });
 
     }
 

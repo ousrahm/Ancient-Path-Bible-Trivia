@@ -7,6 +7,7 @@ class TriviaScene extends Phaser.Scene {
     }
 
     create() {
+
         var currentPlayer = gameState.getCurrentPlayer();
 
         // How to run a looping background
