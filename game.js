@@ -54,7 +54,7 @@ window.onload = function() {
 
 
 var gameState = new GameState();
-
+var gameStarted = false;
 
 var data;
 $.ajax({

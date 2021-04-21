@@ -14,6 +14,12 @@ class lobbyScene extends Phaser.Scene {
  
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20});
 
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async function(snapshot) {
+            if (snapshot.val()) {
+                gameStarted = true;
+            }
+        })
+
         
         
     }
@@ -41,5 +47,8 @@ class lobbyScene extends Phaser.Scene {
             this.printPlayers();
         }
 
+        if (gameStarted) {
+            this.openScene('trivia');
+        }
     }
 }
