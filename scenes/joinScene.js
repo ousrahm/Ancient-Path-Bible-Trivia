@@ -22,7 +22,11 @@ class JoinScene extends Phaser.Scene {
         document.getElementById('enterCode').style.visibility = "visible";
 
         
-        var nextScene = this.add.text(screenCenterX + 450, screenCenterY - 250, "NEXT", {fontFamily: 'balbeer', fontSize: "40px", align: "center", color: '#ffffff'}).setInteractive().on('pointerup', () => { this.openScene("naming") });
+        var nextScene = this.add.text(screenCenterX + 450, screenCenterY - 250, "NEXT", {fontFamily: 'balbeer', fontSize: "40px", align: "center", color: '#ffffff'}).setInteractive().on('pointerup', async () => { 
+            var getJoined = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").get();
+            gameState.setMyPlayer(getJoined.val());
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").set(getJoined.val()+1);    
+            this.openScene("naming") });
 
     }
 
