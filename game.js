@@ -20,7 +20,8 @@ window.onload = function() {
     function(){
         var name = document.getElementById('nameBox').value;
 
-        var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('P1');
+        var player = 'P'+(gameState.getMyPlayer()+1);
+        var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child(player);
         playerRef.set(name);
 
         gameState.changePlayerName(0);
@@ -31,19 +32,26 @@ window.onload = function() {
 
     // Handler for code box and code enter button
     document.getElementById('enterCode').addEventListener("mouseup", 
-    function(){
+    async function(){
         var code = document.getElementById('codeBox').value;
         if (code.length < 4) {
-            document.getElementById('codeBox').value = "Code should be 4 characters."
+            document.getElementById('codeBox').value = "Code should be 4 characters.";
             return;
         }
+
+        var gameRef = await database.ref("promised-land-journey-game").child(code).get();
+        if (!gameRef.exists()) {
+            document.getElementById('codeBox').value = "Invalid code.";
+            return;
+        }
+
         gameState.setUpGameCodeFromJoin(code);
-        console.log(code);
 
         document.getElementById('codeBox').style.visibility= "hidden";
         document.getElementById('enterCode').style.visibility="hidden";
     });
 }
+
 
 var gameState = new GameState();
 
@@ -64,7 +72,5 @@ var questions;
 function makeQuestions(data) {
     questions = new Questions(data);
 }
-
-
 
 

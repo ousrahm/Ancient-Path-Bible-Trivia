@@ -54,7 +54,6 @@ class GameState {
 
     setMyPlayer(number) {
         this.myPlayer = number;
-        console.log(this.myPlayer);
     }
 
     async setUpGameCode() {
