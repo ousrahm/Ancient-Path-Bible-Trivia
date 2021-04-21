@@ -18,12 +18,16 @@ class namingScene extends Phaser.Scene {
         document.getElementById('nameBox').style.visibility = "visible";
         document.getElementById('enterButton').style.visibility = "visible";
 
-        var getJoined = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").get();
-        gameState.setMyPlayer(getJoined.val());
-        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").set(getJoined.val()+1);
-
         
-        var nextScene = this.add.text(screenCenterX + 450, screenCenterY - 250, "NEXT", {fontFamily: 'balbeer', fontSize: "40px", align: "center", color: '#ffffff'}).setInteractive().on('pointerup', () => { this.openScene("lobbyGame") });
+        
+        var nextScene = this.add.text(screenCenterX + 450, screenCenterY - 250, "NEXT", {fontFamily: 'balbeer', fontSize: "40px", align: "center", color: '#ffffff'})
+        nextScene.setInteractive().on('pointerup', async () => { 
+            var getJoined = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").get();
+            gameState.setMyPlayer(getJoined.val());
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").set(getJoined.val()+1);    
+            console.log("hey")
+            this.openScene("lobbyGame");
+        });
     }
 
     /**
