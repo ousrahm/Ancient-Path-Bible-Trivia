@@ -26,7 +26,8 @@ class JoinScene extends Phaser.Scene {
             var getJoined = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").get();
             gameState.setMyPlayer(getJoined.val());
             await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("joined").set(getJoined.val()+1);    
-            this.openScene("naming") });
+            this.openScene("naming") 
+        });
 
     }
 
