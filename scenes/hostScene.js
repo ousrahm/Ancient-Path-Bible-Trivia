@@ -55,7 +55,11 @@ class HostScene extends Phaser.Scene {
             "P4": "Player 4",
             "turn": 0,
             "joined": 0,
-            "started": false
+            "started": false,
+            "retrievedQuestion": false,
+            "question": "",
+            "answers": [],
+            "selectedAnswer": ""
 
         })
         gameState.setUpGameState(numberOfPlayers); 

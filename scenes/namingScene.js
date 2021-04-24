@@ -9,6 +9,8 @@ class namingScene extends Phaser.Scene {
     }
 
     async create() {
+        openedNamingScene = true;
+
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
