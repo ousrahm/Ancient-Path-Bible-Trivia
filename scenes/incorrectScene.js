@@ -12,9 +12,6 @@
     }
 
     async create() {
-         // Sets retrievedQuestion in database to false
-         await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
-
         if (gameState.getWinState() > 1) {
             if (gameState.getCurrentPlayer() == gameState.getPlayersFinished()[gameState.getWinState()-1]) {
                 gameState.checkForWin(false);
@@ -41,7 +38,10 @@
         const currentPlayer = gameState.getCurrentPlayer();
         gameState.addNumberAnswered(currentPlayer);
 
-
+        // Sets retrievedQuestion in database to false
+        if (gameState.getMyPlayer() === 0) {
+           await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
+        }
     }
 
     openScene(nameOfScene){

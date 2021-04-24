@@ -8,10 +8,11 @@ class TriviaScene extends Phaser.Scene {
 
     async create() {
 
-        var currentPlayer = gameState.getCurrentPlayer();
+        console.log("Should only call this once!")
+        this.currentPlayer = gameState.getCurrentPlayer();
 
         // How to run a looping background
-        var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
+        var backgroundName = gameState.getCurrentStageName(this.currentPlayer);
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
         this.background.play();
 
@@ -38,11 +39,11 @@ class TriviaScene extends Phaser.Scene {
         
 
         // Gets number correct and number incorrect
-        var correct = gameState.getNumberCorrect(currentPlayer);
-        var incorrect = gameState.getNumberAnswered(currentPlayer) - correct;
+        var correct = gameState.getNumberCorrect(this.currentPlayer);
+        var incorrect = gameState.getNumberAnswered(this.currentPlayer) - correct;
 
         // Adds current player text
-        this.add.text(screenCenterX, 20, gameState.getPlayerNames(gameState.getCurrentPlayer()), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
+        this.add.text(screenCenterX, 20, gameState.getPlayerNames(this.currentPlayer), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
 
         // Adds correct and incorrect counters
         this.incorrectCounter = this.add.text(30, 150, "Incorrect: "+incorrect, { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "center"})
@@ -53,20 +54,17 @@ class TriviaScene extends Phaser.Scene {
         }
 
         // On the change of retrieveQuestion, call this.retrieveQuestion
-        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").on("value", function(snapshot){
-            
-                this.super.retrieveQuestion();
-            
-        })
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", this.retrieveQuestion)
 
     }
 
     async addQuestion() {
 
         // Pushes a random question to our database
-        var question = questions.getRandomQuestion(gameState.getStages(currentPlayer));
+        var question = questions.getRandomQuestion(gameState.getStages(this.currentPlayer));
         await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
 
+        console.log(question);
         // Gets answers from questions, scrambles them, and pushes them to database
         var answers = questions.getAnswers();
         var scrambled = [];
@@ -98,12 +96,27 @@ class TriviaScene extends Phaser.Scene {
         var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
         var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question, style);
         
+        this.addAnswers();
     }
 
     async retrieveQuestion() {
-        // await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
-        console.log("Hello")
+        if (gameState.getMyPlayer() !== 0){
+            var retrieved = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').get();
+            console.log(retrieved.val());
 
+            if (retrieved.val()) {
+                this.addAnswers();
+                
+                let question = await database.ref("promied-land-journey-game").child(gameState.getGameCode()).child('question').get();
+                // Adds trivia question
+                var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
+                var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question.val(), style);
+
+            } else {
+                console.log(retrieved.val())
+            }
+        
+        }
     }
 
     /**
@@ -142,19 +155,19 @@ class TriviaScene extends Phaser.Scene {
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
         this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers[0], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers["A"], style);
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
         this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers[1], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers["B"], style);
         
         this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);
         this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers[2], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers["C"], style);
 
         this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
         this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers[3], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers["D"], style);
     }
 
     /**
@@ -185,11 +198,11 @@ class TriviaScene extends Phaser.Scene {
         if (!this.timesUp) {
             this.timerText.setText(this.timedEvent.repeatCount);
         }
-        /** If timer reaches 17, show the answers. */
-        if (this.timedEvent.repeatCount == 20 && !this.answersAdded) {
-            this.addAnswers()
-            this.answersAdded = true;            
-        }
+        // /** If timer reaches 17, show the answers. */
+        // if (this.timedEvent.repeatCount == 17 && !this.answersAdded) {
+        //     this.addAnswers();
+        //     this.answersAdded = true;            
+        // }
         /** If the timer reaches 0, go to incorrect scene. */
         if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
             this.timesUp = true;

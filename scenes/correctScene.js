@@ -12,9 +12,6 @@
     }
 
     async create() {
-        // Sets retrievedQuestion in database to false
-        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
-
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
@@ -39,6 +36,11 @@
                 gameState.checkForWin(true);
             }
             this.threeCorrect = true;
+        }
+
+        // Sets retrievedQuestion in database to false
+        if (gameState.getMyPlayer() === 0) {
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
         }
 
     }
