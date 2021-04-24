@@ -30,6 +30,47 @@ window.onload = function() {
         document.getElementById('enterButton').style.visibility="hidden";
     });
 
+    $(document).on("keypress", async function(event){
+        if (event.key === "Enter" && openedNamingScene) {
+            var name = document.getElementById('nameBox').value;
+
+            if (name !== "") {
+                var player = 'P'+(gameState.getMyPlayer()+1);
+                var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child(player);
+                playerRef.set(name);
+            }
+           
+
+            gameState.changePlayerName(0);
+
+            document.getElementById('nameBox').style.visibility= "hidden";
+            document.getElementById('enterButton').style.visibility="hidden";
+            openedNamingScene = false;
+        } else if (event.key === "Enter" && openedJoinScene) {
+            var code = document.getElementById('codeBox').value;
+            if (code.length < 4) {
+                document.getElementById('codeBox').value = "Code should be 4 characters.";
+                return;
+            }
+
+            var gameRef = await database.ref("promised-land-journey-game").child(code).get();
+            if (!gameRef.exists()) {
+                document.getElementById('codeBox').value = "Invalid code.";
+                return;
+            }
+
+            gameState.setUpGameCodeFromJoin(code);
+
+            document.getElementById('codeBox').style.visibility= "hidden";
+            document.getElementById('enterCode').style.visibility="hidden";
+
+            var numberOfPlayers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("Player Number").get();
+            gameState.setUpGameState(numberOfPlayers.val()); 
+        }
+
+    });
+
+
     // Handler for code box and code enter button
     document.getElementById('enterCode').addEventListener("mouseup", 
     async function(){
@@ -53,11 +94,16 @@ window.onload = function() {
         var numberOfPlayers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("Player Number").get();
         gameState.setUpGameState(numberOfPlayers.val()); 
     });
+
+   
 }
 
 
 var gameState = new GameState();
 var gameStarted = false;
+
+var openedJoinScene = false;
+var openedNamingScene = false;
 
 var data;
 $.ajax({

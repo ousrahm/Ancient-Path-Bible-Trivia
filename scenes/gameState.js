@@ -64,9 +64,8 @@ class GameState {
     setUpGameCodeFromJoin(code){
         this.gameCode = code;
     }
-    setUpGameState(numberOfPlayers) {
-        
 
+    setUpGameState(numberOfPlayers) {
         /**Player's enumeration equals their respective index in the other property arrays. */
         this.numberOfPlayers = numberOfPlayers;
         this.playerEnums = {PLAYER1:0, PLAYER2:1, PLAYER3:2, PLAYER4:3};

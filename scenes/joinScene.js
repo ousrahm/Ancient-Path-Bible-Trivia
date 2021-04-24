@@ -4,7 +4,7 @@ class JoinScene extends Phaser.Scene {
     }
 
     async create() {
-        
+        openedJoinScene = true;
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
