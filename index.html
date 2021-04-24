@@ -73,12 +73,14 @@
         <div style="font-family:earth; position:absolute; left:-1000px; visibility:hidden;">.</div>
 
         <div style="display: block; margin: 0 auto;">
-            <textarea id="nameBox" maxlength=15 style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;"></textarea>
-            <button id="enterButton" style="display:block; visibility: hidden; text-align: center; margin-right: auto; margin-left: auto;">ENTER</button>
-            
-            <textarea id="codeBox" maxlength=4 style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;"></textarea>
-            <button id="enterCode" style="display:block; visibility: hidden; text-align: center; margin-right: auto; margin-left: auto;">ENTER</button>
-        
+            <div style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;">
+                <input id="nameBox" maxlength=15 style="visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;">
+                <button id="enterButton" style="visibility: hidden; text-align: center; margin-right: auto; margin-left: auto;">ENTER</button>
+            </div>
+            <div style="display: block; visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;">   
+                <input id="codeBox" maxlength=4 style=" visibility:hidden; text-align: center; margin-left: auto; margin-right: auto;">
+                <button id="enterCode" style=" visibility: hidden; text-align: center; margin-right: auto; margin-left: auto;">ENTER</button>
+            </div>
         </div>
         <!-- firebase deploy --only hosting -->
     </body>
