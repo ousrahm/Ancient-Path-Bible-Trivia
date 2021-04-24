@@ -6,7 +6,7 @@ class TriviaScene extends Phaser.Scene {
     preload() {
     }
 
-    create() {
+    async create() {
 
         var currentPlayer = gameState.getCurrentPlayer();
 
@@ -26,11 +26,10 @@ class TriviaScene extends Phaser.Scene {
         this.triviaBoard.scaleX = .78;
         this.triviaBoard.scaleY = .46;
 
-        // Adds trivia question
-        var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
-        var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, questions.getRandomQuestion(gameState.getStages(currentPlayer)), style);
-    
-        
+        if (gameState.getMyPlayer() === 0){
+            this.addQuestion();
+        }
+
         // Adds timer
         this.timerText = this.add.text(50, 60, "", { fontFamily: 'earth', fontSize: "50px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20 });
@@ -52,6 +51,58 @@ class TriviaScene extends Phaser.Scene {
         for (let i = 0; i < gameState.getNumberOfPlayers(); i++) {
             this.addPlayerInfo(i, gameState.getPlayerNamesArray()[i]);
         }
+
+        // On the change of retrieveQuestion, call this.retrieveQuestion
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").on("value", function(snapshot){
+            
+                this.super.retrieveQuestion();
+            
+        })
+
+    }
+
+    async addQuestion() {
+
+        // Pushes a random question to our database
+        var question = questions.getRandomQuestion(gameState.getStages(currentPlayer));
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
+
+        // Gets answers from questions, scrambles them, and pushes them to database
+        var answers = questions.getAnswers();
+        var scrambled = [];
+        var gotCorrect = false;
+
+        for (let i = 4; i > 0; i--) {
+            var index = this.getRandomInt(i);
+            if (index == 0 && !gotCorrect) {
+                gotCorrect = true;
+                var l;
+                if (i==4){l="A";}else if(i==3){l="B"}else if(i==2){l="C"}else if(i==1){l="D"};
+                questions.setCorrect(l);
+            }
+            scrambled.push(answers[index]);
+            answers.splice(index, 1);
+        }
+
+        var answersRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers");
+        
+        await answersRef.child("A").set(scrambled[0]);
+        await answersRef.child("B").set(scrambled[1]);
+        await answersRef.child("C").set(scrambled[2]);
+        await answersRef.child("D").set(scrambled[3]);
+
+        // Sets retrievedQuestion in database to true
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(true);
+
+        // Adds trivia question
+        var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
+        var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question, style);
+        
+    }
+
+    async retrieveQuestion() {
+        // await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
+        console.log("Hello")
 
     }
 
@@ -84,41 +135,26 @@ class TriviaScene extends Phaser.Scene {
      * questions class to be stored. The answer boards are added to the screen and connected to answerResponse().
      */
 
-    addAnswers() {
-        var answers = questions.getAnswers();
-        var scrambled = [];
-        var gotCorrect = false;
-
-        for (let i = 4; i > 0; i--) {
-            var index = this.getRandomInt(i);
-            if (index == 0 && !gotCorrect) {
-                gotCorrect = true;
-                var l;
-                if (i==4){l="A";}else if(i==3){l="B"}else if(i==2){l="C"}else if(i==1){l="D"};
-                questions.setCorrect(l);
-            }
-            scrambled.push(answers[index]);
-            answers.splice(index, 1);
-        }
-
+    async addAnswers() {
+        var answers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers").get();
 
         var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
         this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, scrambled[0], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers[0], style);
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
         this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, scrambled[1], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers[1], style);
         
         this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);
         this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, scrambled[2], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers[2], style);
 
         this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
         this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, scrambled[3], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers[3], style);
     }
 
     /**

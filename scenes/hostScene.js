@@ -58,7 +58,13 @@ class HostScene extends Phaser.Scene {
             "started": false,
             "retrievedQuestion": false,
             "question": "",
-            "answers": [],
+            "answers": {
+                "A": "",
+                "B": "",
+                "C": "",
+                "D": ""  
+            },
+            "correctAnswer": "",
             "selectedAnswer": ""
 
         })

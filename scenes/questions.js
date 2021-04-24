@@ -61,8 +61,9 @@ class Questions {
         return this.correctLetter;
     }
 
-    setCorrect(letter) {
+    async setCorrect(letter) {
         this.correctLetter=letter;
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('correctAnswer').set(letter);
     }
 
     getRandomInt(max) {
