@@ -12,6 +12,8 @@
     }
 
     async create() {
+        console.log("IncorrectScene: Should only call this once!")
+
         // If the current player has finished the stages, check for a win
         if (gameState.getWinState() > 1) {
             if (gameState.getCurrentPlayer() == gameState.getPlayersFinished()[gameState.getWinState()-1]) {
@@ -33,7 +35,7 @@
         this.add.text(screenCenterX, screenCenterY, texts, style).setOrigin(.5);
 
         // Creates timer
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
+        this.timedEvent = this.time.addEvent({ delay: 3000, callbackScope: this, repeat: 1 });
         this.timesUp = false;
 
         // Adds one to numberAnswered array of current player
@@ -41,9 +43,12 @@
         gameState.addNumberAnswered(currentPlayer);
 
         // Sets retrievedQuestion in database to false
+        // Sets selectedAnswer in database back to an empty string
         if (gameState.getMyPlayer() === 0) {
-           await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set("");
         }
+        
     }
 
     /**

@@ -15,9 +15,6 @@ class TriviaScene extends Phaser.Scene {
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
         this.background.play();
 
-        // Temporary back button
-        // const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
-
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
@@ -60,9 +57,12 @@ class TriviaScene extends Phaser.Scene {
         });
 
         // On the change of selectAnswer in the database, call this.answerWasSelected
-        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").on("value", () => {
-            this.answerWasSelected()
+        this.selectedListener = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").on("value", (snapshot) => {
+            if (snapshot.val() !== "") {
+                this.answerWasSelected();
+            }
         });
+
 
     }
 
@@ -154,7 +154,7 @@ class TriviaScene extends Phaser.Scene {
      * Change the value of the selectedAnswer in the database
      * @param {String} answer 
      */
-    answerResponse(answer) {
+    async answerResponse(answer) {
         var turnRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("turn").get();
         var turn = turnRef.val();
         if (gameState.getMyPlayer() === turn) {
@@ -165,14 +165,18 @@ class TriviaScene extends Phaser.Scene {
     /**
      * Open a scene based on the answer that was selected in the database
      */
-    answerWasSelected() {
+    async answerWasSelected() {
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").off("value", this.selectedListener)
         var answerRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").get();
         var answer = answerRef.val();
-        if (answer === questions.getCorrect()) {
+        
+        if (answer === await questions.getCorrect()) {
             this.openScene("correct");
         } else {
             this.openScene("incorrect");
         }
+        
+
     }
 
     
