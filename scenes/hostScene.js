@@ -1,3 +1,7 @@
+/**
+ * This class holds the host scene which will set a game code, prompt the host for the number of players in the game,
+ * and set up the game in the database and in the GameState class.
+ */
 class HostScene extends Phaser.Scene {
     constructor() {
         super('hostGame');
@@ -7,45 +11,57 @@ class HostScene extends Phaser.Scene {
     }
 
     async create() {
-
+        // Prints an interactive back button to the scene
         const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { 
             this.openScene("menu"); 
         });
 
+        // Grabs a reference to the database
         var gameRef = database.ref("promised-land-journey-game");
+
+        // Grabs the current code of the game
         var getCall = await gameRef.child('gameCode').get();
         var gameCode = getCall.val()
+        
+        // If the code of the game is JJJJ, reset the code to AAAA
         if (gameCode === "JJJJ") {
             await gameRef.child('gameCode').set("AAAA");
+        // If the code is not JJJJ, increment the code by one letter
         } else {
             var code = this.incrementCode(gameCode);
             await gameRef.child('gameCode').set(code);
         }
         gameState.setUpGameCode();
 
+        // Constants for the center of the x and y axes of the scene
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
+        // Prints text telling player to click on the number of players for a game
         var style = {fontFamily: 'balbeer', fontSize: "150px", align: "center", color: '#ffffff'}
-
         this.add.text(screenCenterX, screenCenterY-200, "Click on the number of players...", {fontFamily: 'balbeer', fontSize: "70px", align: "center", color: '#ffffff'}).setOrigin(.5);
         
+        // Prints interactive number buttons to the screen (2, 3, 4)
         var num2 = this.add.text(screenCenterX - 200, screenCenterY, "2", style).setOrigin(.5);
         var num3 = this.add.text(screenCenterX, screenCenterY, "3", style).setOrigin(.5);
         var num4 = this.add.text(screenCenterX + 200, screenCenterY, "4", style).setOrigin(.5);
 
+        // Once a number is selected, sets a game up with that number of players
         num2.setInteractive().on('pointerup', () => { this.setUpGame(2) });
         num3.setInteractive().on('pointerup', () => { this.setUpGame(3) });
         num4.setInteractive().on('pointerup', () => { this.setUpGame(4) });
 
     }
 
+    /**
+     * Function:
+     *  Creates a new game in the database and sets it with the right values
+     *  Sets up an instance of GameState with the correct values
+     *  Adds one to the number of players that have joined the game
+     *  Opens namingScene
+     * @param {Number} numberOfPlayers 
+     */
     async setUpGame(numberOfPlayers) {
-        /**
-         * Started a new game in the database.
-         * Grabbed the reference value to that game.
-         * Set up a new GameState instance with the number of players and the reference value.
-         */
         var game = database.ref("promised-land-journey-game").child(gameState.getGameCode());
         game.set({
             "Player Number": numberOfPlayers,
@@ -139,6 +155,5 @@ class HostScene extends Phaser.Scene {
     }
 
     update() {
-
     }
 }

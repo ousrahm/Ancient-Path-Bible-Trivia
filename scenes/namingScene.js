@@ -1,4 +1,7 @@
-
+/**
+ * This class holds the naming scene which allows a player to enter their name 
+ * after the host and join scenes.
+ */
 class namingScene extends Phaser.Scene {
     constructor() {
         super("naming");

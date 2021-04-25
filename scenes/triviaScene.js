@@ -7,8 +7,7 @@ class TriviaScene extends Phaser.Scene {
     }
 
     async create() {
-
-        console.log("Should only call this once!")
+        // Creates a variable to hold the current player
         this.currentPlayer = gameState.getCurrentPlayer();
 
         // How to run a looping background
@@ -17,7 +16,7 @@ class TriviaScene extends Phaser.Scene {
         this.background.play();
 
         // Temporary back button
-        const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
+        // const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
@@ -27,6 +26,7 @@ class TriviaScene extends Phaser.Scene {
         this.triviaBoard.scaleX = .78;
         this.triviaBoard.scaleY = .46;
 
+        // If the player running this scene is the host, run the addQuestion function
         if (gameState.getMyPlayer() === 0){
             this.addQuestion();
         }
@@ -58,6 +58,13 @@ class TriviaScene extends Phaser.Scene {
 
     }
 
+    /**
+     * Function:
+     * Only the host will access this function    
+     * Adds a random question to the database to be accessed by all players
+     * Grabs answers, shuffles them, and sends them to the database to be accessed by all players
+     * Prints the question to the scene and calls addAnswers()
+     */
     async addQuestion() {
 
         // Pushes a random question to our database
@@ -65,7 +72,8 @@ class TriviaScene extends Phaser.Scene {
         await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
 
         console.log(question);
-        // Gets answers from questions, scrambles them, and pushes them to database
+
+        // Gets answers for the current question and scrambles them
         var answers = questions.getAnswers();
         var scrambled = [];
         var gotCorrect = false;
@@ -82,6 +90,7 @@ class TriviaScene extends Phaser.Scene {
             answers.splice(index, 1);
         }
 
+        // Pushes answers to the database
         var answersRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers");
         
         await answersRef.child("A").set(scrambled[0]);
@@ -92,23 +101,31 @@ class TriviaScene extends Phaser.Scene {
         // Sets retrievedQuestion in database to true
         await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(true);
 
-        // Adds trivia question
+        // Prints trivia question to scene
         var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
         var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question, style);
         
         this.addAnswers();
     }
 
+    /**
+     * Function:
+     * The host will never access this function
+     * 
+     */
     async retrieveQuestion() {
+        // If the player is not the host, continue
         if (gameState.getMyPlayer() !== 0){
+            // If the host has posted a new question to the database, retrieve that question and those answers.
             var retrieved = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').get();
-            console.log(retrieved.val());
 
             if (retrieved.val()) {
+                // this is undefined in a uncaught type error when opening trivia
                 this.addAnswers();
                 
-                let question = await database.ref("promied-land-journey-game").child(gameState.getGameCode()).child('question').get();
-                // Adds trivia question
+                let question = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('question').get();
+                
+                // Prints trivia question to scene
                 var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
                 var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question.val(), style);
 
@@ -133,7 +150,6 @@ class TriviaScene extends Phaser.Scene {
      * Open a scene based on the correct or incorrect answer.
      * @param {String} answer 
      */
-
     answerResponse(answer) {
         if (answer == questions.getCorrect()) {
             this.openScene("correct")
@@ -144,13 +160,13 @@ class TriviaScene extends Phaser.Scene {
 
     /**
      * addAnswers():
-     * The answers to the current question are retrieved. After they are scrambled, the correct answer is sent to the
-     * questions class to be stored. The answer boards are added to the screen and connected to answerResponse().
+     * The answers to the current question are retrieved from the database.
+     * The answer boards are printed to the screen and connected to answerResponse().
      */
-
     async addAnswers() {
         var answers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers").get();
-
+        console.log(answers);
+        console.log(answers["A"]);
         var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
