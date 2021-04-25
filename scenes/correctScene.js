@@ -13,7 +13,7 @@
 
     async create() {
         // How to run a looping background
-        var backgroundName = gameState.getCurrentStageName(this.currentPlayer);
+        var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
         this.background.play();
 
@@ -29,8 +29,8 @@
         // Prints a positive message to the scene
         var responses = ["Awesome! ", "Great job! ", "Kudos! ", "Wonderful! "]
         var texts = responses[this.getRandomInt(4)] + "Correct answer!";
-        var style = {fontFamily: 'balbeer', fontSize: "80px", align: "center", color: '#ffffff'}
-        this.add.text(screenCenterX, screenCenterY, texts, style).setOrigin(.5);
+        var style = {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: '#ffffff'}
+        this.add.text(screenCenterX, 20, texts, style).setOrigin(.5);
 
         // Creates timer
         this.timedEvent = this.time.addEvent({ delay: 3000, callbackScope: this, repeat: 1 });
@@ -51,12 +51,19 @@
             this.threeCorrect = true;
         }
 
+        var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
+        var questionRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('question').get();
+        var question = questionRef.val();
+        this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question, style);
+
         // retrievedQuestion is reset to false in the database
         // selectAnswer is reset to an empty string in the database
         if (gameState.getMyPlayer() === 0) {
             await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
             await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set("");
         }
+
+        this.addAnswers();
     }
 
     /**
@@ -74,6 +81,55 @@
      */
      getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    /**
+     * addAnswers():
+     * The answers to the current question are retrieved from the database.
+     * The answer boards are printed to the screen and connected to answerResponse().
+     */
+     async addAnswers() {
+        var answers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers").get();
+        var correctAnswerRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("correctAnswer").get();
+        var correctAnswer = correctAnswerRef.val();
+        
+        var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
+        var correctStyle = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#00ff00'};
+        
+        this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
+        this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
+        if ("A" === correctAnswer) {
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], correctStyle);
+        } else {
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
+        }
+
+        this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
+        this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
+        if ("B" === correctAnswer) {
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], correctStyle);
+        } else {
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
+            
+        }
+        
+        this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);
+        this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
+        if ("C" === correctAnswer) {
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], correctStyle);
+        } else {
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
+        }
+
+        this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
+        this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
+        if ("D" === correctAnswer) {
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], correctStyle);
+        } else {
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
+        }
     }
 
     update() {
