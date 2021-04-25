@@ -53,8 +53,11 @@ class TriviaScene extends Phaser.Scene {
             this.addPlayerInfo(i, gameState.getPlayerNamesArray()[i]);
         }
 
-        // On the change of retrieveQuestion, call this.retrieveQuestion
-        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", this.retrieveQuestion)
+        // On the change of retrievedQuestion, call this.retrieveQuestion
+        // Using an arrow function here to maintain the right "this"
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", () => {
+            this.retrieveQuestion()
+        });
 
     }
 
@@ -70,8 +73,6 @@ class TriviaScene extends Phaser.Scene {
         // Pushes a random question to our database
         var question = questions.getRandomQuestion(gameState.getStages(this.currentPlayer));
         await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
-
-        console.log(question);
 
         // Gets answers for the current question and scrambles them
         var answers = questions.getAnswers();
@@ -120,9 +121,7 @@ class TriviaScene extends Phaser.Scene {
             var retrieved = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').get();
 
             if (retrieved.val()) {
-                // this is undefined in a uncaught type error when opening trivia
                 this.addAnswers();
-                
                 let question = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('question').get();
                 
                 // Prints trivia question to scene
@@ -130,7 +129,7 @@ class TriviaScene extends Phaser.Scene {
                 var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question.val(), style);
 
             } else {
-                console.log(retrieved.val())
+                return;
             }
         
         }
@@ -165,25 +164,23 @@ class TriviaScene extends Phaser.Scene {
      */
     async addAnswers() {
         var answers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers").get();
-        console.log(answers);
-        console.log(answers["A"]);
         var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
         this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers["A"], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
         this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers["B"], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
         
         this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);
         this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers["C"], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
 
         this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
         this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers["D"], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
     }
 
     /**
