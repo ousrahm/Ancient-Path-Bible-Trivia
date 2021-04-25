@@ -67,7 +67,7 @@ class lobbyScene extends Phaser.Scene {
         }
 
         // NEED TO LOOK INTO WHY ITS CALLING openScene(trivia) more than once
-        if (gameStarted && !this.stopLooping) {
+        if (gameStarted && !this.stopLooping && (gameState.getMyPlayer() !== 0)) {
             this.stopLooping = true;
             for (let i = 0; i < 4; i++) {
                 await gameState.changePlayerName(i);

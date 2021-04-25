@@ -6,17 +6,17 @@ class TriviaScene extends Phaser.Scene {
     preload() {
     }
 
-    create() {
-
-        var currentPlayer = gameState.getCurrentPlayer();
+    async create() {
+        // Creates a variable to hold the current player
+        this.currentPlayer = gameState.getCurrentPlayer();
 
         // How to run a looping background
-        var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
+        var backgroundName = gameState.getCurrentStageName(this.currentPlayer);
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
         this.background.play();
 
         // Temporary back button
-        const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
+        // const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
@@ -26,11 +26,11 @@ class TriviaScene extends Phaser.Scene {
         this.triviaBoard.scaleX = .78;
         this.triviaBoard.scaleY = .46;
 
-        // Adds trivia question
-        var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
-        var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, questions.getRandomQuestion(gameState.getStages(currentPlayer)), style);
-    
-        
+        // If the player running this scene is the host, run the addQuestion function
+        if (gameState.getMyPlayer() === 0){
+            this.addQuestion();
+        }
+
         // Adds timer
         this.timerText = this.add.text(50, 60, "", { fontFamily: 'earth', fontSize: "50px", color: '#ffffff', align: "center"});
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20 });
@@ -39,11 +39,11 @@ class TriviaScene extends Phaser.Scene {
         
 
         // Gets number correct and number incorrect
-        var correct = gameState.getNumberCorrect(currentPlayer);
-        var incorrect = gameState.getNumberAnswered(currentPlayer) - correct;
+        var correct = gameState.getNumberCorrect(this.currentPlayer);
+        var incorrect = gameState.getNumberAnswered(this.currentPlayer) - correct;
 
         // Adds current player text
-        this.add.text(screenCenterX, 20, gameState.getPlayerNames(gameState.getCurrentPlayer()), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
+        this.add.text(screenCenterX, 20, gameState.getPlayerNames(this.currentPlayer), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
 
         // Adds correct and incorrect counters
         this.incorrectCounter = this.add.text(30, 150, "Incorrect: "+incorrect, { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "center"})
@@ -53,38 +53,28 @@ class TriviaScene extends Phaser.Scene {
             this.addPlayerInfo(i, gameState.getPlayerNamesArray()[i]);
         }
 
+        // On the change of retrievedQuestion, call this.retrieveQuestion
+        // Using an arrow function here to maintain the right "this"
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", () => {
+            this.retrieveQuestion()
+        });
+
     }
 
     /**
-     * openScene(nameOfScene):
-     * Starts the scene of the specified name.
-     * @param {String} nameOfScene 
+     * Function:
+     * Only the host will access this function    
+     * Adds a random question to the database to be accessed by all players
+     * Grabs answers, shuffles them, and sends them to the database to be accessed by all players
+     * Prints the question to the scene and calls addAnswers()
      */
-    openScene(nameOfScene){
-        this.scene.start(nameOfScene);
-    }
+    async addQuestion() {
 
-    /**
-     * answerResponse(answer):
-     * Open a scene based on the correct or incorrect answer.
-     * @param {String} answer 
-     */
+        // Pushes a random question to our database
+        var question = questions.getRandomQuestion(gameState.getStages(this.currentPlayer));
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
 
-    answerResponse(answer) {
-        if (answer == questions.getCorrect()) {
-            this.openScene("correct")
-        } else {
-            this.openScene("incorrect")
-        }
-    }
-
-    /**
-     * addAnswers():
-     * The answers to the current question are retrieved. After they are scrambled, the correct answer is sent to the
-     * questions class to be stored. The answer boards are added to the screen and connected to answerResponse().
-     */
-
-    addAnswers() {
+        // Gets answers for the current question and scrambles them
         var answers = questions.getAnswers();
         var scrambled = [];
         var gotCorrect = false;
@@ -101,24 +91,96 @@ class TriviaScene extends Phaser.Scene {
             answers.splice(index, 1);
         }
 
+        // Pushes answers to the database
+        var answersRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers");
+        
+        await answersRef.child("A").set(scrambled[0]);
+        await answersRef.child("B").set(scrambled[1]);
+        await answersRef.child("C").set(scrambled[2]);
+        await answersRef.child("D").set(scrambled[3]);
 
+        // Sets retrievedQuestion in database to true
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(true);
+
+        // Prints trivia question to scene
+        var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
+        var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question, style);
+        
+        this.addAnswers();
+    }
+
+    /**
+     * Function:
+     * The host will never access this function
+     * 
+     */
+    async retrieveQuestion() {
+        // If the player is not the host, continue
+        if (gameState.getMyPlayer() !== 0){
+            // If the host has posted a new question to the database, retrieve that question and those answers.
+            var retrieved = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').get();
+
+            if (retrieved.val()) {
+                this.addAnswers();
+                let question = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('question').get();
+                
+                // Prints trivia question to scene
+                var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
+                var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question.val(), style);
+
+            } else {
+                return;
+            }
+        
+        }
+    }
+
+    /**
+     * openScene(nameOfScene):
+     * Starts the scene of the specified name.
+     * @param {String} nameOfScene 
+     */
+    openScene(nameOfScene){
+        this.scene.start(nameOfScene);
+    }
+
+    /**
+     * answerResponse(answer):
+     * Open a scene based on the correct or incorrect answer.
+     * @param {String} answer 
+     */
+    answerResponse(answer) {
+        if (answer == questions.getCorrect()) {
+            this.openScene("correct")
+        } else {
+            this.openScene("incorrect")
+        }
+    }
+
+    /**
+     * addAnswers():
+     * The answers to the current question are retrieved from the database.
+     * The answer boards are printed to the screen and connected to answerResponse().
+     */
+    async addAnswers() {
+        var answers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers").get();
         var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
         this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, scrambled[0], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
         this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, scrambled[1], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
         
         this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);
         this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, scrambled[2], style);
+        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
 
         this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
         this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, scrambled[3], style);
+        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
     }
 
     /**
@@ -149,11 +211,11 @@ class TriviaScene extends Phaser.Scene {
         if (!this.timesUp) {
             this.timerText.setText(this.timedEvent.repeatCount);
         }
-        /** If timer reaches 17, show the answers. */
-        if (this.timedEvent.repeatCount == 20 && !this.answersAdded) {
-            this.addAnswers()
-            this.answersAdded = true;            
-        }
+        // /** If timer reaches 17, show the answers. */
+        // if (this.timedEvent.repeatCount == 17 && !this.answersAdded) {
+        //     this.addAnswers();
+        //     this.answersAdded = true;            
+        // }
         /** If the timer reaches 0, go to incorrect scene. */
         if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
             this.timesUp = true;

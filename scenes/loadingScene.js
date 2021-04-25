@@ -1,3 +1,7 @@
+/**
+ * This class holds the loading scene which occurs as soon as a user
+ * opens the website.
+ */
 class LoadingScene extends Phaser.Scene {
     constructor() {
         // calling super makes this class inherit characteristics from its predecessor, the Scene class from Phaser
