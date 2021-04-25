@@ -53,10 +53,15 @@ class TriviaScene extends Phaser.Scene {
             this.addPlayerInfo(i, gameState.getPlayerNamesArray()[i]);
         }
 
-        // On the change of retrievedQuestion, call this.retrieveQuestion
+        // On the change of retrievedQuestion in the database, call this.retrieveQuestion
         // Using an arrow function here to maintain the right "this"
         database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", () => {
             this.retrieveQuestion()
+        });
+
+        // On the change of selectAnswer in the database, call this.answerWasSelected
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").on("value", () => {
+            this.answerWasSelected()
         });
 
     }
@@ -146,16 +151,31 @@ class TriviaScene extends Phaser.Scene {
 
     /**
      * answerResponse(answer):
-     * Open a scene based on the correct or incorrect answer.
+     * Change the value of the selectedAnswer in the database
      * @param {String} answer 
      */
     answerResponse(answer) {
-        if (answer == questions.getCorrect()) {
-            this.openScene("correct")
+        var turnRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("turn").get();
+        var turn = turnRef.val();
+        if (gameState.getMyPlayer() === turn) {
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set(answer);
+        } 
+    }
+
+    /**
+     * Open a scene based on the answer that was selected in the database
+     */
+    answerWasSelected() {
+        var answerRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").get();
+        var answer = answerRef.val();
+        if (answer === questions.getCorrect()) {
+            this.openScene("correct");
         } else {
-            this.openScene("incorrect")
+            this.openScene("incorrect");
         }
     }
+
+    
 
     /**
      * addAnswers():
