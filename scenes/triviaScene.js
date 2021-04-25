@@ -15,9 +15,6 @@ class TriviaScene extends Phaser.Scene {
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
         this.background.play();
 
-        // Temporary back button
-        // const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
-
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
@@ -53,11 +50,19 @@ class TriviaScene extends Phaser.Scene {
             this.addPlayerInfo(i, gameState.getPlayerNamesArray()[i]);
         }
 
-        // On the change of retrievedQuestion, call this.retrieveQuestion
+        // On the change of retrievedQuestion in the database, call this.retrieveQuestion
         // Using an arrow function here to maintain the right "this"
         database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", () => {
             this.retrieveQuestion()
         });
+
+        // On the change of selectAnswer in the database, call this.answerWasSelected
+        this.selectedListener = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").on("value", (snapshot) => {
+            if (snapshot.val() !== "") {
+                this.answerWasSelected();
+            }
+        });
+
 
     }
 
@@ -146,16 +151,35 @@ class TriviaScene extends Phaser.Scene {
 
     /**
      * answerResponse(answer):
-     * Open a scene based on the correct or incorrect answer.
+     * Change the value of the selectedAnswer in the database
      * @param {String} answer 
      */
-    answerResponse(answer) {
-        if (answer == questions.getCorrect()) {
-            this.openScene("correct")
-        } else {
-            this.openScene("incorrect")
-        }
+    async answerResponse(answer) {
+        var turnRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("turn").get();
+        var turn = turnRef.val();
+        if (gameState.getMyPlayer() === turn) {
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set(answer);
+        } 
     }
+
+    /**
+     * Open a scene based on the answer that was selected in the database
+     */
+    async answerWasSelected() {
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").off("value", this.selectedListener)
+        var answerRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").get();
+        var answer = answerRef.val();
+        
+        if (answer === await questions.getCorrect()) {
+            this.openScene("correct");
+        } else {
+            this.openScene("incorrect");
+        }
+        
+
+    }
+
+    
 
     /**
      * addAnswers():

@@ -57,8 +57,9 @@ class Questions {
         return this.answers;
     }
 
-    getCorrect() {
-        return this.correctLetter;
+    async getCorrect() {
+        var correctRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('correctAnswer').get();
+        return correctRef.val();
     }
 
     async setCorrect(letter) {

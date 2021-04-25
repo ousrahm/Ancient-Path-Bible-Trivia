@@ -12,9 +12,19 @@
     }
 
     async create() {
+        // How to run a looping background
+        var backgroundName = gameState.getCurrentStageName(this.currentPlayer);
+        this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
+        this.background.play();
+
         // Creates constants for the middle of the x and y axes of the scene
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+
+        // Adds trivia board
+        this.triviaBoard = this.add.image(screenCenterX, 200, "triviaBoard");
+        this.triviaBoard.scaleX = .78;
+        this.triviaBoard.scaleY = .46;
 
         // Prints a positive message to the scene
         var responses = ["Awesome! ", "Great job! ", "Kudos! ", "Wonderful! "]
@@ -23,7 +33,7 @@
         this.add.text(screenCenterX, screenCenterY, texts, style).setOrigin(.5);
 
         // Creates timer
-        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 1 });
+        this.timedEvent = this.time.addEvent({ delay: 3000, callbackScope: this, repeat: 1 });
         this.timesUp = false;
 
         // Adds one to the number correct and the number answered of the current player in the GameState class
@@ -42,10 +52,11 @@
         }
 
         // retrievedQuestion is reset to false in the database
+        // selectAnswer is reset to an empty string in the database
         if (gameState.getMyPlayer() === 0) {
             await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set("");
         }
-
     }
 
     /**
