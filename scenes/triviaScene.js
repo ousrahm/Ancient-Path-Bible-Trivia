@@ -11,9 +11,12 @@ class TriviaScene extends Phaser.Scene {
         this.currentPlayer = gameState.getCurrentPlayer();
 
         // How to run a looping background
-        var backgroundName = gameState.getCurrentStageName(this.currentPlayer);
-        this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
-        this.background.play();
+        if (!document.getElementById('backgroundCheckBox').checked) {
+            var backgroundName = gameState.getCurrentStageName(this.currentPlayer);
+            this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
+            this.background.play();
+        }
+
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;

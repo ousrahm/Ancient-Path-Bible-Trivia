@@ -17,6 +17,8 @@ class MenuScene extends Phaser.Scene {
     }
 
     create() {
+        document.getElementById('checkBoxDiv').style.visibility= "visible";
+
         // Creates constants for the middle of the x and y axes of the scene
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
@@ -49,6 +51,7 @@ class MenuScene extends Phaser.Scene {
      * @param {String} nameOfScene 
      */
     openScene(nameOfScene){
+        document.getElementById('checkBoxDiv').style.visibility= "hidden";
         this.scene.start(nameOfScene);
     }
 
