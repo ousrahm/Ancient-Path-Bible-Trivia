@@ -20,7 +20,7 @@ class lobbyScene extends Phaser.Scene {
             }
         })
 
-        this.everyoneHasJoined = false;
+    
         this.stopLooping = false;
     }
 
@@ -44,9 +44,7 @@ class lobbyScene extends Phaser.Scene {
             this.texts.push(this.add.text(this.screenCenterX, this.screenCenterY-(50 - i*70), "P" + (i+1) + ": " + gameObject.val()[player], {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5));
         }
 
-        if (numJoined == gameState.getNumberOfPlayers()) {
-            
-            this.everyoneHasJoined = true;
+        if (numJoined == gameState.getNumberOfPlayers() && gameState.getMyPlayer() === 0) {
             this.readyButton = this.add.text(this.screenCenterX, this.screenCenterY + 270, "READY", {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5);
             this.readyButton.setInteractive().on('pointerup', async () => {
 
