@@ -104,7 +104,6 @@
         }
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
         if ("B" === correctAnswer) {
             this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], correctStyle);
         } else {
@@ -120,7 +119,6 @@
         }
 
         this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
         if ("D" === correctAnswer) {
             this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], correctStyle);
         } else {
