@@ -118,7 +118,6 @@
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], incorrectStyle);
             } else {
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
-                
             }
             
             this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);

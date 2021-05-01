@@ -14,14 +14,15 @@ class lobbyScene extends Phaser.Scene {
  
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20});
 
-        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async function(snapshot) {
-            if (snapshot.val()) {
-                gameStarted = true;
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async (snapshot) => {
+            if (snapshot.val() && gameState.getMyPlayer() !== 0) {
+                for (let i = 0; i < 4; i++) {
+                    await gameState.changePlayerName(i);
+                }
+                this.openScene('trivia');
             }
         })
 
-    
-        this.stopLooping = false;
     }
 
     openScene(nameOfScene){
@@ -64,13 +65,5 @@ class lobbyScene extends Phaser.Scene {
             this.printPlayers();
         }
 
-        // NEED TO LOOK INTO WHY ITS CALLING openScene(trivia) more than once
-        if (gameStarted && !this.stopLooping && (gameState.getMyPlayer() !== 0)) {
-            this.stopLooping = true;
-            for (let i = 0; i < 4; i++) {
-                await gameState.changePlayerName(i);
-            }
-            this.openScene('trivia');
-        }
     }
 }
