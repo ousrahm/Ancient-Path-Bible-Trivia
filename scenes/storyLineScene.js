@@ -9,7 +9,7 @@ class StoryLine extends Phaser.Scene {
         
     }
 
-    create() {
+    async create() {
         // Adds timer
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
         this.timesUp = false;
@@ -19,10 +19,25 @@ class StoryLine extends Phaser.Scene {
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
         this.add.text(screenCenterX, screenCenterY, "This is a story line.")
 
-        this.add.text(config.width - 100, 30, "SKIP").setInteractive().on('pointerup', () => { this.openScene("trivia"); });;
+        if (gameState.getMyPlayer() === 0) {
+            this.add.text(config.width - 100, 30, "SKIP").setInteractive().on('pointerup', async () => { 
+                await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('skippedStoryline').set(true);
+                this.openScene("trivia"); 
+            });
+        }
+
+        this.skipListener = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('skippedStoryline').on('value', async (snapshot) => {
+            if (snapshot.val() && gameState.getMyPlayer() !== 0) {
+                this.openScene('trivia');
+            }
+        })
+        
     }
 
     openScene(nameOfScene){
+        if (gameState.getMyPlayer() !== 0) {
+            database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('skippedStoryline').off("value", this.skipListener);
+        }
         this.scene.start(nameOfScene);
     }
 

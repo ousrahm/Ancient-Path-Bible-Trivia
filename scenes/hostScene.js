@@ -81,7 +81,8 @@ class HostScene extends Phaser.Scene {
                 "D": ""  
             },
             "correctAnswer": "",
-            "selectedAnswer": ""
+            "selectedAnswer": "",
+            "skippedStoryline": false
 
         })
         gameState.setUpGameState(numberOfPlayers); 

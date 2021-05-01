@@ -56,7 +56,7 @@
         // Sets selectedAnswer in database back to an empty string
         if (gameState.getMyPlayer() === 0) {
             await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').set(false);
-            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set("");
+            // await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set("");
         }
 
         // Prints question to scene
@@ -74,7 +74,10 @@
      * Starts the scene of the specified name.
      * @param {String} nameOfScene 
      */
-    openScene(nameOfScene){
+    async openScene(nameOfScene){
+        if (gameState.getMyPlayer() === 0) {
+            await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").set("");
+        }
         this.scene.start(nameOfScene);
     }
 
