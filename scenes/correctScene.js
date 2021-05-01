@@ -97,7 +97,6 @@
         var correctStyle = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#00ff00'};
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
-        this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
         if ("A" === correctAnswer) {
             this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], correctStyle);
         } else {
@@ -105,7 +104,6 @@
         }
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
-        this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
         this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
         if ("B" === correctAnswer) {
             this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], correctStyle);
@@ -115,7 +113,6 @@
         }
         
         this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);
-        this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
         if ("C" === correctAnswer) {
             this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], correctStyle);
         } else {
@@ -123,7 +120,6 @@
         }
 
         this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
-        this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
         this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
         if ("D" === correctAnswer) {
             this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], correctStyle);
