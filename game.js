@@ -16,86 +16,66 @@ window.onload = function() {
     var game = new Phaser.Game(config);
     
     // Handler for naming box and naming enter button
-    document.getElementById('enterButton').addEventListener("mouseup", 
-    function(){
-        var name = document.getElementById('nameBox').value;
+    document.getElementById('enterButton').addEventListener("mouseup", function(){ nameHandler(); });
 
-        var player = 'P'+(gameState.getMyPlayer()+1);
-        var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child(player);
-        playerRef.set(name);
-
-        gameState.changePlayerName(0);
-
-        document.getElementById('nameBox').style.visibility= "hidden";
-        document.getElementById('enterButton').style.visibility="hidden";
-    });
+    // Handler for code box and code enter button
+    document.getElementById('enterCode').addEventListener("mouseup", function(){ codeHandler(); });
 
     $(document).on("keypress", async function(event){
         if (event.key === "Enter" && openedNamingScene) {
-            var name = document.getElementById('nameBox').value;
-
-            if (name !== "") {
-                var player = 'P'+(gameState.getMyPlayer()+1);
-                var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child(player);
-                playerRef.set(name);
-            }
-           
-
-            gameState.changePlayerName(0);
-
-            document.getElementById('nameBox').style.visibility= "hidden";
-            document.getElementById('enterButton').style.visibility="hidden";
-            openedNamingScene = false;
+            nameHandler();
         } else if (event.key === "Enter" && openedJoinScene) {
-            var code = document.getElementById('codeBox').value;
-            if (code.length < 4) {
-                document.getElementById('codeBox').value = "Code should be 4 characters.";
-                return;
-            }
-
-            var gameRef = await database.ref("promised-land-journey-game").child(code).get();
-            if (!gameRef.exists()) {
-                document.getElementById('codeBox').value = "Invalid code.";
-                return;
-            }
-
-            gameState.setUpGameCodeFromJoin(code);
-
-            document.getElementById('codeBox').style.visibility= "hidden";
-            document.getElementById('enterCode').style.visibility="hidden";
-
-            var numberOfPlayers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("Player Number").get();
-            gameState.setUpGameState(numberOfPlayers.val()); 
+            codeHandler();
         }
-
     });
+   
+}
 
-
-    // Handler for code box and code enter button
-    document.getElementById('enterCode').addEventListener("mouseup", 
-    async function(){
-        var code = document.getElementById('codeBox').value;
-        if (code.length < 4) {
-            document.getElementById('codeBox').value = "Code should be 4 characters.";
-            return;
+let nameHandler = async function() {
+    var name = document.getElementById('nameBox').value;
+    try {
+        if (name !== "") {
+            var player = 'P'+(gameState.getMyPlayer()+1);
+            var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child(player);
+            playerRef.set(name);
         }
+    } catch (e) {
+        document.getElementById('nameBox').value = "Invalid name.";
+    }
+    
+    gameState.changePlayerName(0);
 
+    document.getElementById('nameBox').style.visibility= "hidden";
+    document.getElementById('enterButton').style.visibility="hidden";
+    openedNamingScene = false;
+}
+
+let codeHandler = async function() {
+    var code = document.getElementById('codeBox').value.toUpperCase();
+    if (code.length < 4) {
+        document.getElementById('codeBox').value = "Code should be 4 characters.";
+        return;
+    }
+    try {
         var gameRef = await database.ref("promised-land-journey-game").child(code).get();
         if (!gameRef.exists()) {
             document.getElementById('codeBox').value = "Invalid code.";
             return;
         }
+    } catch (e) {
+        document.getElementById('codeBox').value = "Invalid code!";
+        return;
+    }
 
-        gameState.setUpGameCodeFromJoin(code);
+    gameState.setUpGameCodeFromJoin(code);
 
-        document.getElementById('codeBox').style.visibility= "hidden";
-        document.getElementById('enterCode').style.visibility="hidden";
+    document.getElementById('codeBox').style.visibility= "hidden";
+    document.getElementById('enterCode').style.visibility="hidden";
 
-        var numberOfPlayers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("Player Number").get();
-        gameState.setUpGameState(numberOfPlayers.val()); 
-    });
+    var numberOfPlayers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("Player Number").get();
+    gameState.setUpGameState(numberOfPlayers.val()); 
 
-   
+    openedJoinScene = false;
 }
 
 
