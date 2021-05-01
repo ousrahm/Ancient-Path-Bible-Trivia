@@ -17,7 +17,7 @@ class TriviaScene extends Phaser.Scene {
             this.background.play();
         }
 
-
+        // Grabs center of screen
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
@@ -55,7 +55,7 @@ class TriviaScene extends Phaser.Scene {
 
         // On the change of retrievedQuestion in the database, call this.retrieveQuestion
         // Using an arrow function here to maintain the right "this"
-        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", () => {
+        this.retrievedAQuestion = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("retrievedQuestion").on("value", () => {
             this.retrieveQuestion()
         });
 
@@ -136,6 +136,8 @@ class TriviaScene extends Phaser.Scene {
                 var style = {fontFamily: 'barthowheel', fontSize: "50px", align: "left", wordWrap: {width: this.triviaBoard.width/1.5, useAdvancedWrap: true}, color: '#ffffff'};
                 var text = this.add.text(this.triviaBoard.x/2.1, this.triviaBoard.y/2.1, question.val(), style);
 
+                // Turns listener off for retrievedQuestion 
+                database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('retrievedQuestion').off("value", this.retrievedAQuestion);
             } else {
                 return;
             }

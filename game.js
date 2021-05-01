@@ -80,10 +80,11 @@ window.onload = function() {
             return;
         }
 
-        var gameRef = await database.ref("promised-land-journey-game").child(code).get();
-        if (!gameRef.exists()) {
-            document.getElementById('codeBox').value = "Invalid code.";
-            return;
+        try {
+            await database.ref("promised-land-journey-game").child(code).get();
+        } catch (e) {
+                document.getElementById('codeBox').value = "Invalid code.";
+                return;
         }
 
         gameState.setUpGameCodeFromJoin(code);
