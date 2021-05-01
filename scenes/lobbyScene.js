@@ -14,14 +14,15 @@ class lobbyScene extends Phaser.Scene {
  
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20});
 
-        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async function(snapshot) {
-            if (snapshot.val()) {
-                gameStarted = true;
+        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async (snapshot) => {
+            if (snapshot.val() && gameState.getMyPlayer() !== 0) {
+                for (let i = 0; i < 4; i++) {
+                    await gameState.changePlayerName(i);
+                }
+                this.openScene('trivia');
             }
         })
 
-        this.everyoneHasJoined = false;
-        this.stopLooping = false;
     }
 
     openScene(nameOfScene){
@@ -44,9 +45,7 @@ class lobbyScene extends Phaser.Scene {
             this.texts.push(this.add.text(this.screenCenterX, this.screenCenterY-(50 - i*70), "P" + (i+1) + ": " + gameObject.val()[player], {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5));
         }
 
-        if (numJoined == gameState.getNumberOfPlayers()) {
-            
-            this.everyoneHasJoined = true;
+        if (numJoined == gameState.getNumberOfPlayers() && gameState.getMyPlayer() === 0) {
             this.readyButton = this.add.text(this.screenCenterX, this.screenCenterY + 270, "READY", {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5);
             this.readyButton.setInteractive().on('pointerup', async () => {
 
@@ -66,13 +65,5 @@ class lobbyScene extends Phaser.Scene {
             this.printPlayers();
         }
 
-        // NEED TO LOOK INTO WHY ITS CALLING openScene(trivia) more than once
-        if (gameStarted && !this.stopLooping && (gameState.getMyPlayer() !== 0)) {
-            this.stopLooping = true;
-            for (let i = 0; i < 4; i++) {
-                await gameState.changePlayerName(i);
-            }
-            this.openScene('trivia');
-        }
     }
 }
