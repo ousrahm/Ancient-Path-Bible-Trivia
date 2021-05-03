@@ -27,7 +27,7 @@ class GameState {
          * numberAnswered       Number of questions answered in each player's current stage. 
          * currentStages        Each player's current stage number (1-12).
          * gameCode             Code of game.
-         * finalState           Final stage of the game.
+         * finalStage           Final stage of the game.
          * playersFinished      Numbers of players that have finished the game.
          * currentWinnerIndex   Keeps track of which players to let play during tiebreaker phase
          * tiebreakerRounds     Keeps track of how many rounds have passed during tiebreaker phase

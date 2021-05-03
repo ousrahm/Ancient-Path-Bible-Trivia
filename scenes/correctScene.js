@@ -12,6 +12,7 @@
     }
 
     async create() {
+        var currentPlayer = gameState.getCurrentPlayer();
         // How to run a looping background
         var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
@@ -37,7 +38,7 @@
         this.timesUp = false;
 
         // Adds one to the number correct and the number answered of the current player in the GameState class
-        const currentPlayer = gameState.getCurrentPlayer();
+        var currentPlayer = gameState.getCurrentPlayer();
         gameState.addNumberCorrect(currentPlayer);
         gameState.addNumberAnswered(currentPlayer);
 
@@ -64,6 +65,7 @@
         }
 
         this.addAnswers();
+
     }
 
     /**
@@ -94,26 +96,26 @@
         var correctAnswer = correctAnswerRef.val();
         var style;
         var fontSize;
-        // var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
-        // var correctStyle = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#00ff00'};
+        // var style = {fontFamily: 'barthowheel', fontSize: "30px", align: "left", color: '#ffffff'};
+        // var correctStyle = {fontFamily: 'barthowheel', fontSize: "30px", align: "left", color: '#00ff00'};
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
         if ("A" === correctAnswer) {
             if (answers.val()["A"].length > 15) {
                 fontSize = 500/(answers.val()["A"].length) < 23 ? 23 : 500/(answers.val()["A"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+205, answers.val()["A"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
             }
         } else {
             if (answers.val()["A"].length > 15) {
                 fontSize = 500/(answers.val()["A"].length) < 23 ? 23 : 500/(answers.val()["A"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+205, answers.val()["A"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
             }
         } 
@@ -122,19 +124,19 @@
         if ("B" === correctAnswer) {
             if (answers.val()["B"].length > 15) {
                 fontSize = 500/(answers.val()["B"].length) < 23 ? 23 : 500/(answers.val()["B"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+205, answers.val()["B"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
             }
         } else {
             if (answers.val()["B"].length > 15) {
                 fontSize = 500/(answers.val()["B"].length) < 23 ? 23 : 500/(answers.val()["B"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+205, answers.val()["B"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
             }
         }
@@ -143,19 +145,19 @@
         if ("C" === correctAnswer) {
             if (answers.val()["C"].length > 15) {
                 fontSize = 500/(answers.val()["C"].length) < 23 ? 23 : 500/(answers.val()["C"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+305, answers.val()["C"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
             }
         } else {
             if (answers.val()["C"].length > 15) {
                 fontSize = 500/(answers.val()["C"].length) < 23 ? 23 : 500/(answers.val()["C"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+305, answers.val()["C"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
             }
         }
@@ -164,19 +166,19 @@
         if ("D" === correctAnswer) {
             if (answers.val()["D"].length > 15) {
                 fontSize = 500/(answers.val()["D"].length) < 23 ? 23 : 500/(answers.val()["D"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+305, answers.val()["D"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
             }
         } else {
             if (answers.val()["D"].length > 15) {
                 fontSize = 500/(answers.val()["D"].length) < 23 ? 23 : 500/(answers.val()["D"].length);
-                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+305, answers.val()["D"], style);
             } else {
-                style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+                style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                 this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
             }
         }
@@ -189,6 +191,12 @@
                 this.openScene("nextPlayer");
                 this.timesUp = true;
             }
+        } else if (this.timedEvent.repeatCount == 0 && 
+            gameState.getStages(gameState.getCurrentPlayer()) === gameState.getFinalStage() && 
+            gameState.getWinState() === 1 && 
+            gameState.getCurrentPlayer() === gameState.getNumberOfPlayers() - 1){
+
+                this.openScene("newStage");
         } else {
             // If nobody has finished all the stages yet and this player has not finished this stage, open the triviaScene
             if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.threeCorrect) {
