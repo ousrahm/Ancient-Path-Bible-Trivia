@@ -100,10 +100,8 @@
             var answers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers").get();
             var correctAnswerRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("correctAnswer").get();
             var correctAnswer = correctAnswerRef.val();
-            
-            var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
-            var correctStyle = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#00ff00'};
-            var incorrectStyle = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ff0000'};
+            var fontSize;
+            var style;
             
             this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
             if ("A" === correctAnswer) {
@@ -140,7 +138,7 @@
                 if (answers.val()["B"].length > 15) {
                     fontSize = 500/(answers.val()["B"].length) < 23 ? 23 : 500/(answers.val()["B"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
-                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
+                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+205, answers.val()["B"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                     this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
@@ -149,7 +147,7 @@
                 if (answers.val()["B"].length > 15) {
                     fontSize = 500/(answers.val()["B"].length) < 23 ? 23 : 500/(answers.val()["B"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ff0000'};
-                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
+                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+205, answers.val()["B"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ff0000'};
                     this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
@@ -158,7 +156,7 @@
                 if (answers.val()["B"].length > 15) {
                     fontSize = 500/(answers.val()["B"].length) < 23 ? 23 : 500/(answers.val()["B"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
-                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
+                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+205, answers.val()["B"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                     this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
@@ -170,7 +168,7 @@
                 if (answers.val()["C"].length > 15) {
                     fontSize = 500/(answers.val()["C"].length) < 23 ? 23 : 500/(answers.val()["C"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
-                    this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
+                    this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+305, answers.val()["C"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                     this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
@@ -179,7 +177,7 @@
                 if (answers.val()["C"].length > 15) {
                     fontSize = 500/(answers.val()["C"].length) < 23 ? 23 : 500/(answers.val()["C"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ff0000'};
-                    this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
+                    this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+305, answers.val()["C"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ff0000'};
                     this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
@@ -188,7 +186,7 @@
                 if (answers.val()["C"].length > 15) {
                     fontSize = 500/(answers.val()["C"].length) < 23 ? 23 : 500/(answers.val()["C"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
-                    this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
+                    this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+305, answers.val()["C"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                     this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
@@ -200,7 +198,7 @@
                 if (answers.val()["D"].length > 15) {
                     fontSize = 500/(answers.val()["D"].length) < 23 ? 23 : 500/(answers.val()["D"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
-                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
+                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+305, answers.val()["D"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#00ff00'};
                     this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
@@ -209,7 +207,7 @@
                 if (answers.val()["D"].length > 15) {
                     fontSize = 500/(answers.val()["D"].length) < 23 ? 23 : 500/(answers.val()["D"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ff0000'};
-                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
+                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+305, answers.val()["D"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ff0000'};
                     this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
@@ -218,7 +216,7 @@
                 if (answers.val()["D"].length > 15) {
                     fontSize = 500/(answers.val()["D"].length) < 23 ? 23 : 500/(answers.val()["D"].length);
                     style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
-                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
+                    this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+305, answers.val()["D"], style);
                 } else {
                     style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
                     this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
