@@ -78,6 +78,10 @@ let codeHandler = async function() {
     openedJoinScene = false;
 }
 
+window.addEventListener('beforeunload', function (e) {
+    database.ref("promised-land-journey-game").child(gameState.getGameCode()).remove();
+});
+
 
 var gameState = new GameState();
 var gameStarted = false;
@@ -88,7 +92,7 @@ var openedNamingScene = false;
 var data;
 $.ajax({
     type: "GET",  
-    url: "csvs/questions.csv",
+    url: "csvs/sampleQuestions.csv",
     dataType: "text",       
     success: function(response)  
     {
