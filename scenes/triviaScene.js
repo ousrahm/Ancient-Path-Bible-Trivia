@@ -79,7 +79,8 @@ class TriviaScene extends Phaser.Scene {
     async addQuestion() {
 
         // Pushes a random question to our database
-        var question = questions.getRandomQuestion(gameState.getStages(this.currentPlayer));
+        //var question = questions.getRandomQuestion(gameState.getStages(this.currentPlayer));
+        var question = questions.getRandomQuestion(0);
         await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
 
         // Gets answers for the current question and scrambles them
