@@ -18,8 +18,18 @@ class Questions {
      * @param {2D Array} data 
      * @returns {Object} questionObject
      */
+    // setUpOriginalData(data) {
+    //     var questionObject = {"0":[], "1":[], "2":[], "3":[], "4":[]};
+        
+    //     for (let i = 1; i < data.length; i++) {
+    //         var stage = data[i][5];
+    //         questionObject[stage].push(data[i]);
+    //     }
+    //     return questionObject;
+
+    // }
     setUpOriginalData(data) {
-        var questionObject = {"0":[], "1":[], "2":[], "3":[], "4":[]};
+        var questionObject = {"0":[]};
         
         for (let i = 1; i < data.length; i++) {
             var stage = data[i][5];
