@@ -88,7 +88,7 @@ var openedNamingScene = false;
 var data;
 $.ajax({
     type: "GET",  
-    url: "csvs/sampleQuestions.csv",
+    url: "csvs/questions.csv",
     dataType: "text",       
     success: function(response)  
     {

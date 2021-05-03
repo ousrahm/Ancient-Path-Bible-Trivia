@@ -79,7 +79,8 @@ class TriviaScene extends Phaser.Scene {
     async addQuestion() {
 
         // Pushes a random question to our database
-        var question = questions.getRandomQuestion(gameState.getStages(this.currentPlayer));
+        //var question = questions.getRandomQuestion(gameState.getStages(this.currentPlayer));
+        var question = questions.getRandomQuestion(0);
         await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("question").set(question);
 
         // Gets answers for the current question and scrambles them
@@ -193,23 +194,52 @@ class TriviaScene extends Phaser.Scene {
      */
     async addAnswers() {
         var answers = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("answers").get();
-        var style = {fontFamily: 'barthowheel', fontSize: "35px", align: "left", color: '#ffffff'};
+        var style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+        var fontSize = 1;
         
         this.answerA = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+230, "woodenAnswerA").setScale(.25);
         this.answerA.setInteractive().on('pointerup', () => { this.answerResponse("A")});
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
+        if (answers.val()["A"].length > 15) {
+            fontSize = 500/(answers.val()["A"].length) < 23 ? 23 : 500/(answers.val()["A"].length);
+            style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+205, answers.val()["A"], style);
+        } else {
+            style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
+        }
 
         this.answerB = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+230, "woodenAnswerB").setScale(.25);
         this.answerB.setInteractive().on('pointerup', () => { this.answerResponse("B") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
+        if (answers.val()["B"].length > 15) {
+            fontSize = 500/(answers.val()["B"].length) < 23 ? 23 : 500/(answers.val()["B"].length);
+            style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+205, answers.val()["B"], style);
+        } else {
+            style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
+        }
         
         this.answerC = this.add.image(this.triviaBoard.x - 175, this.triviaBoard.y+330, "woodenAnswerC").setScale(.25);
         this.answerC.setInteractive().on('pointerup', () => { this.answerResponse("C") });
-        this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
+        if (answers.val()["C"].length > 15) {
+            fontSize = 500/(answers.val()["C"].length) < 23 ? 23 : 500/(answers.val()["C"].length);
+            style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+305, answers.val()["C"], style);
+        } else {
+            style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
+        }
 
         this.answerD = this.add.image(this.triviaBoard.x + 150, this.triviaBoard.y+330, "woodenAnswerD").setScale(.25);
         this.answerD.setInteractive().on('pointerup', () => { this.answerResponse("D") });
-        this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
+        if (answers.val()["D"].length > 15) {
+            fontSize = 500/(answers.val()["D"].length) < 23 ? 23 : 500/(answers.val()["D"].length);
+            style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+305, answers.val()["D"], style);
+        } else {
+            style = {fontFamily: 'barthowheel', fontSize: "35px", wordWrap: {width: 200, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
+        }
     }
 
     /**
