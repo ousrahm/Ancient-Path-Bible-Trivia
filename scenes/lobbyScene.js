@@ -14,7 +14,7 @@ class lobbyScene extends Phaser.Scene {
  
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20});
 
-        await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async (snapshot) => {
+        this.startedListener = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async (snapshot) => {
             if (snapshot.val() && gameState.getMyPlayer() !== 0) {
                 for (let i = 0; i < 4; i++) {
                     await gameState.changePlayerName(i);
@@ -26,6 +26,7 @@ class lobbyScene extends Phaser.Scene {
     }
 
     openScene(nameOfScene){
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').off("value", this.startedListener);
         this.scene.start(nameOfScene);
     }
     
