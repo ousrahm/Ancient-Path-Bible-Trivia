@@ -15,6 +15,8 @@
         // How to run a looping background
         var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
         this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
+        this.background.displayHeight = config.height;
+        this.background.displayWidth = config.width;
         this.background.play();
 
         // If the current player has finished the stages, check for a win

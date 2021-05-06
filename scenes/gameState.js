@@ -20,7 +20,8 @@ class GameState {
         this.players;
         this.playerNames = ["Player 1", "Player 2", "Player 3", "Player 4"];
         this.currentPlayer = 0;
-        this.stageNames = ["desertLoop", "autumnLoop", "rainbowLoop", "summerLoop", "finaleLoop"];
+        // this.stageNames = ["desertLoop", "autumnLoop", "rainbowLoop", "summerLoop", "finaleLoop"];
+        this.stageNames = ['ocean', 'hills', 'mountains', 'forest', 'reddesert'];
         
         /**
          * numberCorrect        Number of questions answered correctly in each player's current stage. 

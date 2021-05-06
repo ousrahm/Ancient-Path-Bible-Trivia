@@ -11,13 +11,16 @@ class LoadingScene extends Phaser.Scene {
 
     preload()  {
         this.load.image("desertBackground", "images/desertImage2.jpg");
-        this.load.image("menuSign", "images/menuSign.png")
+        this.load.image("menuSign", "images/menuSign.png");
 
-        this.load.video('desertLoop', 'images/desertLoopNoAudio.mp4', 'loadeddata', false, true);
-        this.load.video('autumnLoop', 'images/autumn.mp4', 'loadeddata', false, true);
-        this.load.video('rainbowLoop', 'images/rainbow.mp4', 'loadeddata', false, true);
-        this.load.video('summerLoop', 'images/summer.mp4', 'loadeddata', false, true);
-        this.load.video('finaleLoop', 'images/finale.mp4', 'loadeddata', false, true);
+        this.load.video('forest', 'images/forest.mp4', false, true);
+        this.load.video('hills', 'images/hillsFINAL.mp4', false, true);
+        this.load.video('mountains', 'images/mountains.mp4', false, true);
+        this.load.video('ocean', 'images/oceanFINAL.mp4', false, true);
+        this.load.video('reddesert', 'images/reddesert.mp4', false, true);
+        this.load.video('river', 'images/riverFlowingFINAL.mp4', false, true);
+        this.load.video('rocks', 'images/rocks.mp4', false, true);
+        this.load.video('roundForest', 'images/roundForest.mp4', false, true);
     }
 
     create() {
