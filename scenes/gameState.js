@@ -52,6 +52,23 @@ class GameState {
         this.winState = 0;
     }
 
+    resetGameState() {
+        this.numberOfPlayers = undefined;
+        this.numberOfPlayers = undefined;
+        this.playerEnums = undefined;
+        this.players = undefined;
+        this.currentPlayer = 0;
+        this.numberCorrect = [];
+        this.numberAnswered = [];
+        this.currentStages = [];
+        this.gameCode = undefined;
+        this.playersFinished = [];
+        this.currentWinnerIndex = 99;
+        this.tiebreakerRounds = 0;
+        this.hasTied = false;
+        this.winState = 0;
+    }
+
     setMyPlayer(number) {
         this.myPlayer = number; 
     }

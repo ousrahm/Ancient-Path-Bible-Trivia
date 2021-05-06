@@ -21,6 +21,7 @@ class victoryScene extends Phaser.Scene {
 
     reset() {
         database.ref("promised-land-journey-game").child(gameState.getGameCode()).remove();
+        gameState.resetGameState();
         this.openScene('menu');
     }
 
