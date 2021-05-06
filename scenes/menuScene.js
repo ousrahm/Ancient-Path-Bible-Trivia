@@ -9,11 +9,11 @@ class MenuScene extends Phaser.Scene {
     } 
 
     preload(){ 
-        this.load.image("triviaBoard", 'images/wooden buttons/woodenBoard.png');
-        this.load.image("woodenAnswerA", "images/wooden buttons/woodenAnswerA.png");
-        this.load.image("woodenAnswerB", "images/wooden buttons/woodenAnswerB.png");
-        this.load.image("woodenAnswerC", "images/wooden buttons/woodenAnswerC.png");
-        this.load.image("woodenAnswerD", "images/wooden buttons/woodenAnswerD.png");
+        this.load.image("triviaBoard", 'images/triviaBoard.png');
+        this.load.image("woodenAnswerA", "images/woodenAnswerA.png");
+        this.load.image("woodenAnswerB", "images/woodenAnswerB.png");
+        this.load.image("woodenAnswerC", "images/woodenAnswerC.png");
+        this.load.image("woodenAnswerD", "images/woodenAnswerD.png");
     }
 
     create() {
