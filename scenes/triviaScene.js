@@ -200,7 +200,7 @@ class TriviaScene extends Phaser.Scene {
         if (answers.val()["A"].length > 15) {
             fontSize = 500/(answers.val()["A"].length) < 23 ? 23 : 500/(answers.val()["A"].length);
             style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
-            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+205, answers.val()["A"], style);
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+200, answers.val()["A"], style);
         } else {
             style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
             this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+220, answers.val()["A"], style);
@@ -211,7 +211,7 @@ class TriviaScene extends Phaser.Scene {
         if (answers.val()["B"].length > 15) {
             fontSize = 500/(answers.val()["B"].length) < 23 ? 23 : 500/(answers.val()["B"].length);
             style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
-            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+205, answers.val()["B"], style);
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+200, answers.val()["B"], style);
         } else {
             style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
             this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+220, answers.val()["B"], style);
@@ -222,7 +222,7 @@ class TriviaScene extends Phaser.Scene {
         if (answers.val()["C"].length > 15) {
             fontSize = 500/(answers.val()["C"].length) < 23 ? 23 : 500/(answers.val()["C"].length);
             style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
-            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+305, answers.val()["C"], style);
+            this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+300, answers.val()["C"], style);
         } else {
             style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
             this.add.text(this.triviaBoard.x - 260, this.triviaBoard.y+320, answers.val()["C"], style);
@@ -233,7 +233,7 @@ class TriviaScene extends Phaser.Scene {
         if (answers.val()["D"].length > 15) {
             fontSize = 500/(answers.val()["D"].length) < 23 ? 23 : 500/(answers.val()["D"].length);
             style = {fontFamily: 'barthowheel', fontSize: fontSize + "px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
-            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+305, answers.val()["D"], style);
+            this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+300, answers.val()["D"], style);
         } else {
             style = {fontFamily: 'barthowheel', fontSize: "30px", wordWrap: {width: 210, useAdvancedWrap: true}, align: "left", color: '#ffffff'};
             this.add.text(this.triviaBoard.x + 70, this.triviaBoard.y+320, answers.val()["D"], style);
