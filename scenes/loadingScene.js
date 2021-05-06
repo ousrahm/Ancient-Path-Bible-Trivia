@@ -13,14 +13,14 @@ class LoadingScene extends Phaser.Scene {
         this.load.image("desertBackground", "images/desertImage2.jpg");
         this.load.image("menuSign", "images/menuSign.png");
 
-        this.load.video('forest', 'images/forest.mp4', false, true);
-        this.load.video('hills', 'images/hillsFINAL.mp4', false, true);
-        this.load.video('mountains', 'images/mountains.mp4', false, true);
-        this.load.video('ocean', 'images/oceanFINAL.mp4', false, true);
-        this.load.video('reddesert', 'images/reddesert.mp4', false, true);
-        this.load.video('river', 'images/riverFlowingFINAL.mp4', false, true);
-        this.load.video('rocks', 'images/rocks.mp4', false, true);
-        this.load.video('roundForest', 'images/roundForest.mp4', false, true);
+        this.load.video('forest', 'images/backgrounds/forest.mp4', false, true);
+        this.load.video('hills', 'images/backgrounds/hills.mp4', false, true);
+        this.load.video('mountains', 'images/backgrounds/mountains.mp4', false, true);
+        this.load.video('ocean', 'images/backgrounds/ocean.mp4', false, true);
+        this.load.video('reddesert', 'images/backgrounds/reddesert.mp4', false, true);
+        this.load.video('river', 'images/backgrounds/river.mp4', false, true);
+        this.load.video('rocks', 'images/backgrounds/rocks.mp4', false, true);
+        this.load.video('roundForest', 'images/backgrounds/roundForest.mp4', false, true);
     }
 
     create() {
