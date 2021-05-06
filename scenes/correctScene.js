@@ -14,9 +14,13 @@
     async create() {
         var currentPlayer = gameState.getCurrentPlayer();
         // How to run a looping background
-        var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
-        this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
-        this.background.play();
+        if (!document.getElementById('backgroundCheckBox').checked) {
+            var backgroundName = gameState.getCurrentStageName(gameState.getCurrentPlayer());
+            this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
+            this.background.displayHeight = config.height;
+            this.background.displayWidth = config.width;
+            this.background.play();
+        }
 
         // Creates constants for the middle of the x and y axes of the scene
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;

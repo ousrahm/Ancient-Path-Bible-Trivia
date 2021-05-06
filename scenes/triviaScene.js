@@ -14,6 +14,8 @@ class TriviaScene extends Phaser.Scene {
         if (!document.getElementById('backgroundCheckBox').checked) {
             var backgroundName = gameState.getCurrentStageName(this.currentPlayer);
             this.background = this.add.video(0, 0, backgroundName).setOrigin(0,0);
+            this.background.displayHeight = config.height;
+            this.background.displayWidth = config.width;
             this.background.play();
         }
 
