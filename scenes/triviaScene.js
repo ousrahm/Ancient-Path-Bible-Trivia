@@ -175,7 +175,6 @@ class TriviaScene extends Phaser.Scene {
         database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").off("value", this.selectedListener)
         var answerRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child("selectedAnswer").get();
         var answer = answerRef.val();
-        console.log("Answer: " + answer);
         
         if (answer === await questions.getCorrect()) {
             this.openScene("correct");
