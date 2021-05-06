@@ -12,6 +12,8 @@ class lobbyScene extends Phaser.Scene {
 
         var prompt = this.add.text(this.screenCenterX, this.screenCenterY - 200, "Lobby Code:"+gameState.getGameCode(), {fontFamily: 'balbeer', fontSize: "70px", align: "center", color: '#ffffff'}).setOrigin(.5);
  
+        var focus = this.add.text(50, this.screenCenterY, "ATTENTION: Changing tabs/leaving your browser during the game will cause issues.", {fontFamily: 'balbeer', wordWrap: {width: 300, useAdvancedWrap: true}, fontSize: "30px", align: "center", color: '#ffffff'})
+        
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20});
 
         this.startedListener = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').on('value', async (snapshot) => {
