@@ -40,12 +40,6 @@
         this.triviaBoard.scaleX = .78;
         this.triviaBoard.scaleY = .46;
 
-        // Prints a message to the scene
-        var responses = ["Nice try! ", "Sorry! ", "Bummer! ", "Not this time! "]
-        var texts = responses[this.getRandomInt(4)] + "Incorrect answer.";
-        var style = {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: '#ffffff'}
-        this.add.text(screenCenterX, 20, texts, style).setOrigin(.5);
-
         // Creates timer
         this.timedEvent = this.time.addEvent({ delay: 3000, callbackScope: this, repeat: 1 });
         this.timesUp = false;
@@ -55,6 +49,17 @@
         gameState.addNumberAnswered(currentPlayer);
 
         var selectRef = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('selectedAnswer').get();
+
+        // Prints a message to the scene
+        var responses = ["Nice try! ", "Sorry! ", "Bummer! ", "Not this time! "];
+        var texts;
+        if (selectRef.val() === "") {
+            texts = responses[this.getRandomInt(4)] + "The timer ran out!";
+        } else {
+            texts = responses[this.getRandomInt(4)] + "Incorrect answer.";
+        }
+        var style = {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: '#ffffff'}
+        this.add.text(screenCenterX, 20, texts, style).setOrigin(.5);
 
         // Sets retrievedQuestion in database to false
         // Sets selectedAnswer in database back to an empty string

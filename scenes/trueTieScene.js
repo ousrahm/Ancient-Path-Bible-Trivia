@@ -18,7 +18,7 @@ class TrueTieScene extends Phaser.Scene {
             message += " and " + gameState.getPlayerNames(gameState.getPlayersFinished()[i]);
         }
 
-        message += " have all reached the Promised Land!!!"
+        message += " have all reached the Promised Land!!! Congratulations!"
 
         for (let i = 0; i < gameState.getNumberOfPlayers(); i++){
             gameState.resetNumberCorrect(gameState.getPlayers()[i]);
