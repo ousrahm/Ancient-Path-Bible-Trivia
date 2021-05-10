@@ -14,13 +14,13 @@ class StoryLine extends Phaser.Scene {
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 3 });
         this.timesUp = false;
 
-        var style = {fontFamily: 'balbeer', fontSize: "60px", align: "center", wordWrap: {width: 500, useAdvancedWrap: true}, color: '#ffffff'};
+        var style = {fontFamily: 'balbeer', fontSize: "60px", align: "center", wordWrap: {width: 500, useAdvancedWrap: true}, color: 'black'};
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-        this.add.text(screenCenterX, screenCenterY, "This is a story line.", style);
+        this.add.text(screenCenterX, screenCenterY, "This is a story line.", style).setOrigin(0.5);
 
         if (gameState.getMyPlayer() === 0) {
-            this.add.text(config.width - 100, 30, "SKIP", {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: '#ffffff'}).setInteractive().on('pointerup', async () => { 
+            this.add.text(config.width - 100, 30, "SKIP", {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: 'black'}).setInteractive().on('pointerup', async () => { 
                 await database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('skippedStoryline').set(true);
                 this.openScene("trivia"); 
             });
@@ -46,7 +46,6 @@ class StoryLine extends Phaser.Scene {
             this.openScene("trivia");
             this.timesUp = true;
         }
-        
 
     }
 }

@@ -3,7 +3,7 @@ var database = firebase.database();
 var config = {
     width: 1200,
     height: 600,
-    backgroundColor: 0x0000000,
+    backgroundColor: 0xFFFFFFF,
     scale: { parent: 'mygame', autoCenter: Phaser.Scale.CENTER_BOTH }, 
     scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, lobbyScene, StoryLine, TieScene, TrueTieScene, namingScene]
 }

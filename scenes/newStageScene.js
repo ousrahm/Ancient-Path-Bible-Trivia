@@ -38,7 +38,7 @@ class newStageScene extends Phaser.Scene {
             // Added text about player moving onto next stage and change current player
             const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
             const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-            var style = {fontFamily: 'balbeer', fontSize: "80px", align: "center", wordWrap: {width: 950, useAdvancedWrap: true}, color: '#ffffff'};
+            var style = {fontFamily: 'balbeer', fontSize: "80px", align: "center", wordWrap: {width: 950, useAdvancedWrap: true}, color: 'black'};
             
             this.add.text(screenCenterX, screenCenterY, texts, style).setOrigin(.5);
         }

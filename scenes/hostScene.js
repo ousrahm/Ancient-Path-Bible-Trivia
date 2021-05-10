@@ -38,8 +38,8 @@ class HostScene extends Phaser.Scene {
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
         // Prints text telling player to click on the number of players for a game
-        var style = {fontFamily: 'balbeer', fontSize: "150px", align: "center", color: '#ffffff'}
-        this.add.text(screenCenterX, screenCenterY-200, "Click on the number of players...", {fontFamily: 'balbeer', fontSize: "70px", align: "center", color: '#ffffff'}).setOrigin(.5);
+        var style = {fontFamily: 'balbeer', fontSize: "150px", align: "center", color: '#000000'}
+        this.add.text(screenCenterX, screenCenterY-200, "Click on the number of players...", {fontFamily: 'balbeer', fontSize: "70px", align: "center", color: '#000000'}).setOrigin(.5);
         
         // Prints interactive number buttons to the screen (2, 3, 4)
         var num2 = this.add.text(screenCenterX - 200, screenCenterY, "2", style).setOrigin(.5);

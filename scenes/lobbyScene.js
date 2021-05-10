@@ -5,14 +5,14 @@ class lobbyScene extends Phaser.Scene {
 
     async create() {
 
-        const backButton = this.add.text(20, 20, "Back", {font: "bold 30px Arial", fill: "white"}).setInteractive().on('pointerup', () => { this.openScene("menu") });
+        // const backButton = this.add.text(20, 20, "BACK", {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: 'black'}).setInteractive().on('pointerup', () => { this.openScene("menu") });
 
         this.screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         this.screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
-        var prompt = this.add.text(this.screenCenterX, this.screenCenterY - 200, "Lobby Code:"+gameState.getGameCode(), {fontFamily: 'balbeer', fontSize: "70px", align: "center", color: '#ffffff'}).setOrigin(.5);
+        var prompt = this.add.text(this.screenCenterX, this.screenCenterY - 200, "Lobby Code:"+gameState.getGameCode(), {fontFamily: 'balbeer', fontSize: "70px", align: "center", color: 'black'}).setOrigin(.5);
  
-        var focus = this.add.text(50, this.screenCenterY, "ATTENTION: Changing tabs/leaving your browser during the game will cause issues.", {fontFamily: 'balbeer', wordWrap: {width: 300, useAdvancedWrap: true}, fontSize: "30px", align: "center", color: '#ffffff'})
+        var focus = this.add.text(50, this.screenCenterY, "ATTENTION: Changing tabs/leaving your browser during the game will cause issues.", {fontFamily: 'balbeer', wordWrap: {width: 300, useAdvancedWrap: true}, fontSize: "30px", align: "center", color: 'black'})
         
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20});
 
@@ -31,6 +31,8 @@ class lobbyScene extends Phaser.Scene {
         database.ref("promised-land-journey-game").child(gameState.getGameCode()).child('started').off("value", this.startedListener);
         this.scene.start(nameOfScene);
     }
+    // Uncaught (in promise) TypeError: Cannot read property 'joined' of null
+    // at lobbyScene.printPlayers (lobbyScene.js:37
     
     async printPlayers() {
         var gameObject = await database.ref("promised-land-journey-game").child(gameState.getGameCode()).get();
@@ -42,14 +44,14 @@ class lobbyScene extends Phaser.Scene {
             }
         }
         this.texts = [];
-
+        
         for (let i = 0; i < numJoined; i++) {
             var player = "P" + (i+1);
-            this.texts.push(this.add.text(this.screenCenterX, this.screenCenterY-(50 - i*70), "P" + (i+1) + ": " + gameObject.val()[player], {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5));
+            this.texts.push(this.add.text(this.screenCenterX, this.screenCenterY-(50 - i*70), "P" + (i+1) + ": " + gameObject.val()[player], {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: 'black'}).setOrigin(0.5));
         }
 
         if (numJoined == gameState.getNumberOfPlayers() && gameState.getMyPlayer() === 0) {
-            this.readyButton = this.add.text(this.screenCenterX, this.screenCenterY + 270, "READY", {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: '#ffffff'}).setOrigin(0.5);
+            this.readyButton = this.add.text(this.screenCenterX, this.screenCenterY + 270, "READY", {fontFamily: 'balbeer', fontSize: "50px", align: "center", color: 'black'}).setOrigin(0.5);
             this.readyButton.setInteractive().on('pointerup', async () => {
 
                 for (let i = 0; i < 4; i++) {

@@ -10,6 +10,7 @@ class LoadingScene extends Phaser.Scene {
     }
 
     preload()  {
+        this.load.image("logo", "images/apa_logo.png");
         this.load.image("desertBackground", "images/desertImage.jpg");
         this.load.image("menuSign", "images/menuSign.png");
 
@@ -24,8 +25,26 @@ class LoadingScene extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(200, 200, "Loading Game...", {font: "bold 30px Arial", fill: "white"});
-        this.scene.start("menu");
 
+        // Adds timer
+        this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 5 });
+        this.timesUp = false;
+
+        // Creates constants for the middle of the x and y axes of the scene
+        const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+        const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+        
+        // Adds logo to center of page
+        this.logo = this.add.image(screenCenterX, screenCenterY - 50, "logo").setOrigin(0.5);
+        this.logo.scaleX = .4;
+        this.logo.scaleY = .4;
+
+    }
+
+    update() {
+        if (this.timedEvent.repeatCount == 0 && !this.timesUp) {
+            this.scene.start("menu");
+            this.timesUp = true;
+        }
     }
 }

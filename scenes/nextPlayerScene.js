@@ -33,7 +33,7 @@ class nextPlayerScene extends Phaser.Scene {
             // Added text about it being the next player's turn and change current player 
             const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
             const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-            var style = {fontFamily: 'balbeer', fontSize: "80px", align: "center", wordWrap: {width: 1000, useAdvancedWrap: true}, color: '#ffffff'};
+            var style = {fontFamily: 'balbeer', fontSize: "80px", align: "center", wordWrap: {width: 1000, useAdvancedWrap: true}, color: 'black'};
             this.add.text(screenCenterX, screenCenterY, gameState.getPlayerNames(currentPlayer) + "'s turn is over. " + gameState.getPlayerNames(gameState.changeCurrentPlayer()) + " get ready!!", style).setOrigin(.5);
         
         }
