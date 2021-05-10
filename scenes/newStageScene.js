@@ -55,10 +55,11 @@ class newStageScene extends Phaser.Scene {
 
 
     update() {
-        if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.gameOver && !this.storyLine) {
-            this.openScene("storyline");
-            this.timesUp = true;
-        } else if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.gameOver && this.storyLine) {
+        // if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.gameOver && !this.storyLine) {
+        //     this.openScene("storyline");
+        //     this.timesUp = true;
+        // } else 
+        if (this.timedEvent.repeatCount == 0 && !this.timesUp && !this.gameOver) {
             this.openScene("trivia")
             this.timesUp = true;
         }

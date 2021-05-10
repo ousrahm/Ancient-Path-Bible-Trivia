@@ -5,7 +5,7 @@ var config = {
     height: 600,
     backgroundColor: 0xFFFFFFF,
     scale: { parent: 'mygame', autoCenter: Phaser.Scale.CENTER_BOTH }, 
-    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, lobbyScene, StoryLine, TieScene, TrueTieScene, namingScene]
+    scene: [LoadingScene, MenuScene, HostScene, JoinScene, TriviaScene, CorrectScene, IncorrectScene, newStageScene, nextPlayerScene, victoryScene, lobbyScene, TieScene, TrueTieScene, namingScene]
 }
 
 window.onload = function() {
@@ -34,10 +34,13 @@ window.onload = function() {
 let nameHandler = async function() {
     var name = document.getElementById('nameBox').value;
     try {
-        if (name !== "") {
+        if (name !== "" && name.length <= 12) {
             var player = 'P'+(gameState.getMyPlayer()+1);
             var playerRef = database.ref("promised-land-journey-game").child(gameState.getGameCode()).child(player);
             playerRef.set(name);
+        } else if (name.length > 12) {
+            document.getElementById('nameBox').value = "Too many characters.";
+            return;
         }
     } catch (e) {
         document.getElementById('nameBox').value = "Invalid name.";
