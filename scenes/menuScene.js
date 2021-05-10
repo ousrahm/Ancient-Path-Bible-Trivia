@@ -32,8 +32,8 @@ class MenuScene extends Phaser.Scene {
         this.menuSign.setScale(.5)
     
         // Prints game title text
-        this.add.text(screenCenterX, screenCenterY - 120, "Promised Land", {fontSize: '100px', fontFamily: "balbeer", fill: "white"}).setOrigin(.5);
-        this.add.text(screenCenterX, screenCenterY - 30, "Journey", {fontSize: '90px', fontFamily: "balbeer", fill: "white"}).setOrigin(.5);
+        this.add.text(screenCenterX, screenCenterY - 120, "Ancient Path", {fontSize: '100px', fontFamily: "balbeer", fill: "white"}).setOrigin(.5);
+        this.add.text(screenCenterX, screenCenterY - 30, "Bible Trivia", {fontSize: '90px', fontFamily: "balbeer", fill: "white"}).setOrigin(.5);
 
         var style1 = {fontSize: '80px', fontFamily: "honest", fill: "white"};
 
