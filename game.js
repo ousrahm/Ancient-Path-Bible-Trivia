@@ -1,7 +1,4 @@
-
 var database = firebase.database();
-
-
 
 var config = {
     width: 1200,
@@ -15,15 +12,18 @@ window.onload = function() {
     // Created a new Game instance that we can configure
     var game = new Phaser.Game(config);
     
-    // Handler for naming box and naming enter button
+    // 1. Handler for naming box and naming enter button
     document.getElementById('enterButton').addEventListener("mouseup", function(){ nameHandler(); });
 
-    // Handler for code box and code enter button
+    // 1. Handler for code box and code enter button
     document.getElementById('enterCode').addEventListener("mouseup", function(){ codeHandler(); });
 
     $(document).on("keypress", async function(event){
+        // 2. Handler for naming box and naming enter button
         if (event.key === "Enter" && openedNamingScene) {
             nameHandler();
+            
+        // 2. Handler for code box and code enter button
         } else if (event.key === "Enter" && openedJoinScene) {
             codeHandler();
         }
