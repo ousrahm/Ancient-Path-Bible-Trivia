@@ -47,8 +47,8 @@ class TriviaScene extends Phaser.Scene {
         // Adds current player text
         this.add.text(screenCenterX, 20, gameState.getPlayerNames(this.currentPlayer), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
 
-        // Adds correct and incorrect counters
-        this.incorrectCounter = this.add.text(30, 150, "Incorrect: "+incorrect, { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "center"})
+        // Adds incorrect counter
+        // this.incorrectCounter = this.add.text(30, 150, "Incorrect: "+incorrect, { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "center"})
 
         // Adds location of other players
         for (let i = 0; i < gameState.getNumberOfPlayers(); i++) {
