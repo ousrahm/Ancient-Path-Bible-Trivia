@@ -25,6 +25,16 @@ class TrueTieScene extends Phaser.Scene {
         }
 
         this.add.text(screenCenterX, screenCenterY, message, style).setOrigin(.5);
+
+        var resetStyle = {fontFamily: 'balbeer', fontSize: "40px", align: "center", wordWrap: {width: 700, useAdvancedWrap: true}, color: 'black'};
+        var resetGame = this.add.text(screenCenterX, screenCenterY + 250, "Return to Main Menu", resetStyle).setOrigin(.5);
+        resetGame.setInteractive().on('pointerup', () => { this.reset() });
+    }
+
+    reset() {
+        database.ref("promised-land-journey-game").child(gameState.getGameCode()).remove();
+        gameState.resetGameState();
+        this.openScene('menu');
     }
 
     openScene(nameOfScene){

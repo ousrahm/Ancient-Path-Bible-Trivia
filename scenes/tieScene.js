@@ -10,7 +10,7 @@ class TieScene extends Phaser.Scene {
 
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-        var style = {fontFamily: 'balbeer', fontSize: "60px", align: "center", wordWrap: {width: 500, useAdvancedWrap: true}, color: 'black'};
+        var style = {fontFamily: 'balbeer', fontSize: "60px", align: "center", wordWrap: {width: 700, useAdvancedWrap: true}, color: 'black'};
 
         var message = gameState.getPlayerNames(gameState.getPlayersFinished()[0]);
 
