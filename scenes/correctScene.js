@@ -34,7 +34,11 @@
         // Prints a positive message to the scene
         var responses = ["Awesome! ", "Great job! ", "Kudos! ", "Wonderful! "]
         var texts = responses[this.getRandomInt(4)] + "Correct answer!";
-        var style = {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: '#ffffff'}
+
+        var style = {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: '#ffffff'};
+        if (document.getElementById('backgroundCheckBox').checked){
+            style = {fontFamily: 'balbeer', fontSize: "30px", align: "center", color: 'black'};
+        }
         this.add.text(screenCenterX, 20, texts, style).setOrigin(.5);
 
         // Creates timer

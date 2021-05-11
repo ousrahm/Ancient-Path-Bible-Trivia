@@ -34,7 +34,11 @@ class TriviaScene extends Phaser.Scene {
         }
 
         // Adds timer
-        this.timerText = this.add.text(50, 60, "", { fontFamily: 'earth', fontSize: "50px", color: '#ffffff', align: "center"});
+        var timerStyle = { fontFamily: 'earth', fontSize: "50px", color: '#ffffff', align: "center"};
+        if (document.getElementById('backgroundCheckBox').checked){
+            timerStyle = { fontFamily: 'earth', fontSize: "50px", color: 'black', align: "center"};
+        }
+        this.timerText = this.add.text(50, 60, "", timerStyle);
         this.timedEvent = this.time.addEvent({ delay: 1000, callbackScope: this, repeat: 20 });
         this.answersAdded = false;
         this.timesUp = false;
@@ -45,7 +49,11 @@ class TriviaScene extends Phaser.Scene {
         var incorrect = gameState.getNumberAnswered(this.currentPlayer) - correct;
 
         // Adds current player text
-        this.add.text(screenCenterX, 20, gameState.getPlayerNames(this.currentPlayer), { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"}).setOrigin(.5);
+        var currentPlayerStyle = { fontFamily: 'earth', fontSize: "40px", color: '#ffffff', align: "center"};
+        if (document.getElementById('backgroundCheckBox').checked){
+            currentPlayerStyle = { fontFamily: 'earth', fontSize: "40px", color: 'black', align: "center"};
+        }
+        this.add.text(screenCenterX, 20, gameState.getPlayerNames(this.currentPlayer), currentPlayerStyle).setOrigin(.5);
 
         // Adds incorrect counter
         // this.incorrectCounter = this.add.text(30, 150, "Incorrect: "+incorrect, { fontFamily: 'earth', fontSize: "30px", color: '#ffffff', align: "center"})
@@ -260,6 +268,9 @@ class TriviaScene extends Phaser.Scene {
         var playerStage = gameState.getStages(player)+1
         var playerCorrect = gameState.getNumberCorrect(player);
         var style = { fontFamily: 'earth', fontSize: "20px", color: '#ffffff', align: "left"};
+        if (document.getElementById('backgroundCheckBox').checked){
+            style = { fontFamily: 'earth', fontSize: "20px", color: 'black', align: "left"};
+        }
         this.add.text(30, 200 + (player*30), name+": " + "Stage " + playerStage + "." + playerCorrect, style);
     }
 
