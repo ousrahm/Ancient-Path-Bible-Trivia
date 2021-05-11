@@ -95,7 +95,7 @@ var openedNamingScene = false;
 var data;
 $.ajax({
     type: "GET",  
-    url: "csvs/questions.csv",
+    url: "csvs/triviaQuestions.csv",
     dataType: "text",       
     success: function(response)  
     {
